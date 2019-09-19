@@ -1,39 +1,132 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:webfeed/webfeed.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+final url = 'https://itsallwidgets.com/podcast/feed';
+
+class Podcast with ChangeNotifier {
+  RssFeed _feed;
+  RssItem _selectedItem;
+
+  RssFeed get feed => _feed;
+  void parse(String url) async {
+    final res = await http.get(url);
+    final xmlStr = res.body;
+    _feed = RssFeed.parse(xmlStr);
+    notifyListeners();
+  }
+
+  RssItem get selectedItem => _selectedItem;
+  set selectedItem(RssItem value) {
+    _selectedItem = value;
+    notifyListeners();
+  }
+}
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'The Boring Show!',
-      home: BoringPage(),
+    return ChangeNotifierProvider(
+      builder: (_) => Podcast()..parse(url),
+      child: MaterialApp(
+        title: 'The Boring Show!',
+        home: EpisodesPage(),
+      ),
     );
   }
 }
 
-class BoringPage extends StatelessWidget {
+class EpisodesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: DashCastApp()),
+      body: Consumer<Podcast>(builder: (context, podcast, _) {
+        return podcast.feed != null
+            ? EpisodeListView(rssFeed: podcast.feed)
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      }),
     );
   }
 }
 
-class DashCastApp extends StatelessWidget {
+class EpisodeListView extends StatelessWidget {
+  const EpisodeListView({
+    Key key,
+    @required this.rssFeed,
+  }) : super(key: key);
+
+  final RssFeed rssFeed;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Flexible(
-          flex: 9,
-          child: Placeholder(),
+    return ListView(
+      children: rssFeed.items
+          .map(
+            (i) => ListTile(
+              title: Text(i.title),
+              subtitle: Text(
+                i.description,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () {
+                Provider.of<Podcast>(context).selectedItem = i;
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => PlayerPage()),
+                );
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class PlayerPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          Provider.of<Podcast>(context).selectedItem.title,
         ),
+      ),
+      body: SafeArea(child: Player()),
+    );
+  }
+}
+
+class Player extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final podcast = Provider.of<Podcast>(context);
+    return Column(
+      children: [
+        Flexible(
+            flex: 8,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                Image.network(podcast.feed.image.url),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    podcast.selectedItem.description.trim(),
+                  ),
+                ),
+              ]),
+            )),
         Flexible(
           flex: 2,
-          child: AudioControls(),
+          child: Material(
+            elevation: 12,
+            child: AudioControls(),
+          ),
         ),
       ],
     );
@@ -59,8 +152,6 @@ class PlaybackButtons extends StatefulWidget {
 class _PlaybackButtonState extends State<PlaybackButtons> {
   bool _isPlaying = false;
   FlutterSound _sound;
-  final url =
-      'https://incompetech.com/music/royalty-free/mp3-royaltyfree/Surf%20Shimmy.mp3';
   double _playPosition;
   Stream<PlayStatus> _playerSubscription;
 
@@ -76,7 +167,7 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
     setState(() => _isPlaying = false);
   }
 
-  void _play() async {
+  void _play(String url) async {
     await _sound.startPlayer(url);
     _playerSubscription = _sound.onPlayerStateChanged
       ..listen((e) {
@@ -94,10 +185,15 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
 
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Podcast>(context).selectedItem;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Slider(value: _playPosition),
+        Slider(
+          value: _playPosition,
+          onChanged: null,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -108,7 +204,7 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
                 if (_isPlaying) {
                   _stop();
                 } else {
-                  _play();
+                  _play(item.guid);
                 }
               },
             ),
