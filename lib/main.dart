@@ -1,14 +1,29 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:webfeed/webfeed.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 final url = 'https://itsallwidgets.com/podcast/feed';
+
+final pathSuffix = 'dashcast/downloads';
+
+Future<String> _getDownloadPath(String filename) async {
+  final dir = await getApplicationDocumentsDirectory();
+  final prefix = dir.path;
+  final absolutePath = path.join(prefix, filename);
+  print(absolutePath);
+  return absolutePath;
+}
 
 class Podcast with ChangeNotifier {
   RssFeed _feed;
   RssItem _selectedItem;
+  Map<String, bool> downloadStatus;
 
   RssFeed get feed => _feed;
   void parse(String url) async {
@@ -22,6 +37,29 @@ class Podcast with ChangeNotifier {
   set selectedItem(RssItem value) {
     _selectedItem = value;
     notifyListeners();
+  }
+
+  void download(RssItem item, [Function(double) callback]) async {
+    final req = http.Request('GET', Uri.parse(item.guid));
+    final res = await req.send();
+    if (res.statusCode != 200)
+      throw Exception('Unexpected HTTP code: ${res.statusCode}');
+
+    final contentLength = res.contentLength;
+    var downloadedLength = 0;
+
+    final file = File(await _getDownloadPath(path.split(item.guid).last));
+    res.stream
+        .map((chunk) {
+          downloadedLength += chunk.length;
+          if (callback != null) callback(downloadedLength / contentLength);
+          return chunk;
+        })
+        .pipe(file.openWrite())
+        .whenComplete(() {
+          print('Downloading complete');
+        })
+        .catchError((e) => print('An Error has occurred!!!: $e'));
   }
 }
 
@@ -63,6 +101,8 @@ class EpisodeListView extends StatelessWidget {
 
   final RssFeed rssFeed;
 
+  void downloadStatus(double num) => print('$num');
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -75,6 +115,16 @@ class EpisodeListView extends StatelessWidget {
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
+              trailing: IconButton(
+                  icon: Icon(Icons.arrow_downward),
+                  onPressed: () {
+                    Provider.of<Podcast>(context).download(i);
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Downloading ${i.title}'),
+                      ),
+                    );
+                  }),
               onTap: () {
                 Provider.of<Podcast>(context).selectedItem = i;
                 Navigator.of(context).push(
@@ -168,6 +218,8 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
   }
 
   void _play(String url) async {
+    url =
+        "/Users/mattsullivan/Library/Developer/CoreSimulator/Devices/2F86562E-E28F-46CF-9EFD-F9A94B25CCBF/data/Containers/Data/Application/EC3E8BE6-C5AE-4ABD-AC7B-D0625551BCBE/Documents/episode-25.mp3";
     await _sound.startPlayer(url);
     _playerSubscription = _sound.onPlayerStateChanged
       ..listen((e) {

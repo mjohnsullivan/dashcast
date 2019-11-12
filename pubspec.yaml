@@ -10,10 +10,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_sound: ^1.4.5
+  flutter_sound: ^1.5.2
   webfeed: ^0.4.2
   http: ^0.12.0+2
   provider: ^3.1.0
+  path_provider: ^1.4.0
+  path: ^1.6.4
 
 dev_dependencies:
   flutter_test:
