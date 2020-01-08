@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -207,7 +208,7 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
   bool _isPlaying = false;
   FlutterSound _sound;
   double _playPosition;
-  Stream<PlayStatus> _playerSubscription;
+  StreamSubscription<PlayStatus> _playerSubscription;
 
   @override
   void initState() {
@@ -216,22 +217,31 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
     _playPosition = 0;
   }
 
+  @override
+  void dispose() {
+    // TODO cleanly clean things up. Since _cleanup is async, sometimes the _playerSubscription listener calls setState after dispose but before it's canceled.
+    _cleanup();
+    super.dispose();
+  }
+
+  void _cleanup() async {
+    await _sound.stopPlayer();
+    _playerSubscription.cancel();
+  }
+
   void _stop() async {
     await _sound.stopPlayer();
     setState(() => _isPlaying = false);
   }
 
   void _play(String url) async {
-    url =
-        "/Users/mattsullivan/Library/Developer/CoreSimulator/Devices/2F86562E-E28F-46CF-9EFD-F9A94B25CCBF/data/Containers/Data/Application/EC3E8BE6-C5AE-4ABD-AC7B-D0625551BCBE/Documents/episode-25.mp3";
     await _sound.startPlayer(url);
-    _playerSubscription = _sound.onPlayerStateChanged
-      ..listen((e) {
-        if (e != null) {
-          print(e.currentPosition);
-          setState(() => _playPosition = (e.currentPosition / e.duration));
-        }
-      });
+    _playerSubscription = _sound.onPlayerStateChanged.listen((e) {
+      if (e != null) {
+        print(e.currentPosition);
+        setState(() => _playPosition = (e.currentPosition / e.duration));
+      }
+    });
     setState(() => _isPlaying = true);
   }
 
