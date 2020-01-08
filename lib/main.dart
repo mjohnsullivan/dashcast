@@ -204,16 +204,20 @@ class PlaybackButtons extends StatefulWidget {
   _PlaybackButtonState createState() => _PlaybackButtonState();
 }
 
-class _PlaybackButtonState extends State<PlaybackButtons> {
+class _PlaybackButtonState extends State<PlaybackButtons>
+    with SingleTickerProviderStateMixin {
   bool _isPlaying = false;
   FlutterSound _sound;
   double _playPosition;
   StreamSubscription<PlayStatus> _playerSubscription;
+  AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _sound = FlutterSound();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _playPosition = 0;
   }
 
@@ -221,6 +225,7 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
   void dispose() {
     // TODO cleanly clean things up. Since _cleanup is async, sometimes the _playerSubscription listener calls setState after dispose but before it's canceled.
     _cleanup();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -231,18 +236,20 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
 
   void _stop() async {
     await _sound.stopPlayer();
-    setState(() => _isPlaying = false);
+    _animationController.reverse();
+    _isPlaying = false;
   }
 
   void _play(String url) async {
+    _animationController.forward();
+    _isPlaying = true;
     await _sound.startPlayer(url);
     _playerSubscription = _sound.onPlayerStateChanged.listen((e) {
       if (e != null) {
-        print(e.currentPosition);
+        //print(e.currentPosition);
         setState(() => _playPosition = (e.currentPosition / e.duration));
       }
     });
-    setState(() => _isPlaying = true);
   }
 
   void _fastForward() {}
@@ -265,7 +272,10 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
           children: <Widget>[
             IconButton(icon: Icon(Icons.fast_rewind), onPressed: null),
             IconButton(
-              icon: _isPlaying ? Icon(Icons.stop) : Icon(Icons.play_arrow),
+              icon: AnimatedIcon(
+                  icon: AnimatedIcons.play_pause,
+                  progress:
+                      _animationController), // _isPlaying ? Icon(Icons.stop) : Icon(Icons.play_arrow),
               onPressed: () {
                 if (_isPlaying) {
                   _stop();
