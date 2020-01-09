@@ -114,8 +114,8 @@ class EpisodeListView extends StatelessWidget {
       children: rssFeed.items
           .map(
             (i) => ListTile(
-              leading: CircleAvatar(
-                  backgroundImage: NetworkImage(rssFeed.image.url)),
+              leading:
+                  Hero(child: Image.network(rssFeed.image.url), tag: i.title),
               title: Text(i.title),
               subtitle: Text(
                 i.description,
@@ -169,7 +169,9 @@ class Player extends StatelessWidget {
             flex: 8,
             child: SingleChildScrollView(
               child: Column(children: [
-                Image.network(podcast.feed.image.url),
+                Hero(
+                    child: Image.network(podcast.feed.image.url),
+                    tag: podcast.selectedItem.title),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
