@@ -28,7 +28,7 @@ Future<String> _getDownloadPath(String filename) async {
 class Podcast with ChangeNotifier {
   RssFeed _feed;
   RssItem _selectedItem;
-  Map<String, bool> downloadStatus;
+  Map<RssItem, String> downloadedFiles = {};
 
   RssFeed get feed => _feed;
   void parse(String url) async {
@@ -62,7 +62,9 @@ class Podcast with ChangeNotifier {
         })
         .pipe(file.openWrite())
         .whenComplete(() {
-          print('Downloading complete');
+          print('Downloading complete ${file.path}');
+          downloadedFiles[item] = file.path;
+          notifyListeners();
         })
         .catchError((e) => print('An Error has occurred!!!: $e'));
   }

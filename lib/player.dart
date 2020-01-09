@@ -122,7 +122,8 @@ class _PlaybackButtonState extends State<PlaybackButtons>
 
   @override
   Widget build(BuildContext context) {
-    final item = Provider.of<Podcast>(context).selectedItem;
+    final podcast = Provider.of<Podcast>(context);
+    final item = podcast.selectedItem;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -138,13 +139,14 @@ class _PlaybackButtonState extends State<PlaybackButtons>
             IconButton(
               icon: AnimatedIcon(
                   icon: AnimatedIcons.play_pause,
-                  progress:
-                      _animationController), // _isPlaying ? Icon(Icons.stop) : Icon(Icons.play_arrow),
+                  progress: _animationController),
               onPressed: () {
                 if (_isPlaying) {
                   _stop();
                 } else {
-                  _play(item.guid);
+                  _play(podcast.downloadedFiles.containsKey(item)
+                      ? podcast.downloadedFiles[item]
+                      : item.guid);
                 }
               },
             ),
