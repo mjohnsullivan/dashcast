@@ -114,8 +114,9 @@ class EpisodeListView extends StatelessWidget {
       children: rssFeed.items
           .map(
             (i) => ListTile(
-              leading:
-                  Hero(child: Image.network(rssFeed.image.url), tag: i.title),
+              leading: Hero(
+                  child: ClipOval(child: Image.network(rssFeed.image.url)),
+                  tag: i.title),
               title: Text(i.title),
               subtitle: Text(
                 i.description,
