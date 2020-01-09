@@ -114,6 +114,8 @@ class EpisodeListView extends StatelessWidget {
       children: rssFeed.items
           .map(
             (i) => ListTile(
+              leading: CircleAvatar(
+                  backgroundImage: NetworkImage(rssFeed.image.url)),
               title: Text(i.title),
               subtitle: Text(
                 i.description,
@@ -230,8 +232,8 @@ class _PlaybackButtonState extends State<PlaybackButtons>
   }
 
   void _cleanup() async {
-    await _sound.stopPlayer();
-    _playerSubscription.cancel();
+    if (_sound.isPlaying) await _sound.stopPlayer();
+    _playerSubscription?.cancel();
   }
 
   void _stop() async {
