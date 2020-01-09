@@ -5,8 +5,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dashcast/player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/flutter_sound.dart';
 import 'package:webfeed/webfeed.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -113,10 +113,13 @@ class EpisodeListView extends StatelessWidget {
     return ListView(
       children: rssFeed.items
           .map(
+            // TODO(efortuna): do we want to build our own listtile for better spacing for our needs?
+            // https://stackoverflow.com/questions/53474168/how-to-reduce-the-margin-between-leading-and-title-for-listtile-flutter
             (i) => ListTile(
               leading: Hero(
                   child: ClipOval(child: Image.network(rssFeed.image.url)),
                   tag: i.title),
+              contentPadding: EdgeInsets.symmetric(horizontal: 8),
               title: Text(i.title),
               subtitle: Text(
                 i.description,
@@ -142,160 +145,6 @@ class EpisodeListView extends StatelessWidget {
             ),
           )
           .toList(),
-    );
-  }
-}
-
-class PlayerPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          Provider.of<Podcast>(context).selectedItem.title,
-        ),
-      ),
-      body: SafeArea(child: Player()),
-    );
-  }
-}
-
-class Player extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final podcast = Provider.of<Podcast>(context);
-    return Column(
-      children: [
-        Flexible(
-            flex: 8,
-            child: SingleChildScrollView(
-              child: Column(children: [
-                Hero(
-                    child: Image.network(podcast.feed.image.url),
-                    tag: podcast.selectedItem.title),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    podcast.selectedItem.description.trim(),
-                  ),
-                ),
-              ]),
-            )),
-        Flexible(
-          flex: 2,
-          child: Material(
-            elevation: 12,
-            child: AudioControls(),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class AudioControls extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        PlaybackButtons(),
-      ],
-    );
-  }
-}
-
-class PlaybackButtons extends StatefulWidget {
-  @override
-  _PlaybackButtonState createState() => _PlaybackButtonState();
-}
-
-class _PlaybackButtonState extends State<PlaybackButtons>
-    with SingleTickerProviderStateMixin {
-  bool _isPlaying = false;
-  FlutterSound _sound;
-  double _playPosition;
-  StreamSubscription<PlayStatus> _playerSubscription;
-  AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _sound = FlutterSound();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    _playPosition = 0;
-  }
-
-  @override
-  void dispose() {
-    // TODO cleanly clean things up. Since _cleanup is async, sometimes the _playerSubscription listener calls setState after dispose but before it's canceled.
-    _cleanup();
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  void _cleanup() async {
-    if (_sound.isPlaying) await _sound.stopPlayer();
-    _playerSubscription?.cancel();
-  }
-
-  void _stop() async {
-    await _sound.stopPlayer();
-    _animationController.reverse();
-    _isPlaying = false;
-  }
-
-  void _play(String url) async {
-    _animationController.forward();
-    _isPlaying = true;
-    await _sound.startPlayer(url);
-    _playerSubscription = _sound.onPlayerStateChanged.listen((e) {
-      if (e != null) {
-        //print(e.currentPosition);
-        setState(() => _playPosition = (e.currentPosition / e.duration));
-      }
-    });
-  }
-
-  void _fastForward() {}
-
-  void _rewind() {}
-
-  @override
-  Widget build(BuildContext context) {
-    final item = Provider.of<Podcast>(context).selectedItem;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Slider(
-          value: _playPosition,
-          onChanged: null,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            IconButton(icon: Icon(Icons.fast_rewind), onPressed: null),
-            IconButton(
-              icon: AnimatedIcon(
-                  icon: AnimatedIcons.play_pause,
-                  progress:
-                      _animationController), // _isPlaying ? Icon(Icons.stop) : Icon(Icons.play_arrow),
-              onPressed: () {
-                if (_isPlaying) {
-                  _stop();
-                } else {
-                  _play(item.guid);
-                }
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.fast_forward),
-              onPressed: null,
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
