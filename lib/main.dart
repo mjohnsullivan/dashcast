@@ -15,20 +15,13 @@ import 'package:path/path.dart' as path;
 
 final url = 'https://itsallwidgets.com/podcast/feed';
 
-final pathSuffix = 'dashcast/downloads';
-
-Future<String> _getDownloadPath(String filename) async {
-  final dir = await getApplicationDocumentsDirectory();
-  final prefix = dir.path;
-  final absolutePath = path.join(prefix, filename);
-  print(absolutePath);
-  return absolutePath;
-}
-
 class Podcast with ChangeNotifier {
   RssFeed _feed;
   RssItem _selectedItem;
-  Map<RssItem, String> downloadedFiles = {};
+  Map<RssItem, String> _downloadedFiles = {};
+  final pathSuffix = 'dashcast/downloads';
+
+  Map<RssItem, String> get downloadedFiles => _downloadedFiles;
 
   RssFeed get feed => _feed;
   void parse(String url) async {
@@ -42,6 +35,14 @@ class Podcast with ChangeNotifier {
   set selectedItem(RssItem value) {
     _selectedItem = value;
     notifyListeners();
+  }
+
+  Future<String> _getDownloadPath(String filename) async {
+    final dir = await getApplicationDocumentsDirectory();
+    final prefix = dir.path;
+    final absolutePath = path.join(prefix, filename);
+    print(absolutePath);
+    return absolutePath;
   }
 
   void download(RssItem item, [Function(double) callback]) async {
@@ -115,29 +116,37 @@ class EpisodeListView extends StatelessWidget {
     return ListView(
       children: rssFeed.items
           .map(
-            // TODO(efortuna): do we want to build our own listtile for better spacing for our needs?
-            // https://stackoverflow.com/questions/53474168/how-to-reduce-the-margin-between-leading-and-title-for-listtile-flutter
             (i) => ListTile(
-              leading: Hero(
-                  child: ClipOval(child: Image.network(rssFeed.image.url)),
-                  tag: i.title),
-              contentPadding: EdgeInsets.symmetric(horizontal: 8),
+              leading: Stack(
+                alignment: AlignmentDirectional.center,
+                children: <Widget>[
+                  Hero(
+                      child: ClipOval(
+                        child: Opacity(
+                          opacity: .15,
+                          child: Image.network(rssFeed.image.url),
+                        ),
+                      ),
+                      tag: i.title),
+                  IconButton(
+                      icon: Icon(Icons.file_download),
+                      onPressed: () {
+                        Provider.of<Podcast>(context).download(i,
+                            (amount) => print('downloaded this much: $amount'));
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Downloading ${i.title}'),
+                          ),
+                        );
+                      }),
+                ],
+              ),
               title: Text(i.title),
               subtitle: Text(
                 i.description,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              trailing: IconButton(
-                  icon: Icon(Icons.arrow_downward),
-                  onPressed: () {
-                    Provider.of<Podcast>(context).download(i);
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Downloading ${i.title}'),
-                      ),
-                    );
-                  }),
               onTap: () {
                 Provider.of<Podcast>(context).selectedItem = i;
                 Navigator.of(context).push(
