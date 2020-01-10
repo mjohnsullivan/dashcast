@@ -37,27 +37,14 @@ class EpisodesPage extends StatelessWidget {
     return Scaffold(
       body: Consumer<Podcast>(builder: (context, podcast, _) {
         return podcast.feed != null
-            ? EpisodeListView(rssFeed: podcast.feed)
+            ? ListView(
+                children:
+                    podcast.feed.items.map((i) => PodcastTile(i)).toList(),
+              )
             : Center(
                 child: CircularProgressIndicator(),
               );
       }),
-    );
-  }
-}
-
-class EpisodeListView extends StatelessWidget {
-  const EpisodeListView({
-    Key key,
-    @required this.rssFeed,
-  }) : super(key: key);
-
-  final RssFeed rssFeed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: rssFeed.items.map((i) => PodcastTile(i)).toList(),
     );
   }
 }
@@ -72,7 +59,6 @@ class PodcastTile extends StatefulWidget {
 class _PodcastTileState extends State<PodcastTile>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
-  final _defaultOpacity = .15;
 
   @override
   void initState() {
@@ -91,7 +77,6 @@ class _PodcastTileState extends State<PodcastTile>
 
   @override
   Widget build(BuildContext context) {
-    final podcast = Provider.of<Podcast>(context);
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: Wiggle(
@@ -99,54 +84,7 @@ class _PodcastTileState extends State<PodcastTile>
         child: ElevationOnAnimate(
           animation: _animationController,
           child: ListTile(
-            leading: Stack(
-              alignment: AlignmentDirectional.center,
-              children: <Widget>[
-                Hero(
-                    child: ClipOval(
-                      child: Consumer<DownloadManager>(
-                          child: Image.network(podcast.feed.image.url),
-                          builder: (BuildContext context,
-                              DownloadManager manager, Widget child) {
-                            var percentDownloaded = manager
-                                .downloadStatus(widget._item)
-                                .percentDownloaded;
-                            return AnimatedOpacity(
-                              duration: Duration(milliseconds: 100),
-                              opacity:
-                                  percentDownloaded * (1 - _defaultOpacity) +
-                                      _defaultOpacity,
-                              child: child,
-                            );
-                          }),
-                    ),
-                    tag: widget._item.title),
-                Consumer<DownloadManager>(
-                  builder: (BuildContext context, DownloadManager manager,
-                      Widget child) {
-                    var status = manager.downloadStatus(widget._item);
-                    return Visibility(
-                      visible: status.percentDownloaded == 0,
-                      child: child,
-                    );
-                  },
-                  child: IconButton(
-                      icon: Icon(Icons.file_download),
-                      onPressed: () {
-                        Provider.of<DownloadManager>(context)
-                            .download(widget._item)
-                            .then((_) => _animationController
-                                .forward()
-                                .then((_) => _animationController.reverse()));
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Downloading ${widget._item.title}'),
-                          ),
-                        );
-                      }),
-                ),
-              ],
-            ),
+            leading: DownloadControl(widget._item, _animationController),
             title: Text(widget._item.title),
             subtitle: Text(
               '\n' + widget._item.description.trim(),
@@ -162,6 +100,75 @@ class _PodcastTileState extends State<PodcastTile>
           ),
         ),
       ),
+    );
+  }
+}
+
+class DownloadControl extends StatelessWidget {
+  const DownloadControl(this._item, this._animationController);
+
+  final _defaultOpacity = .15;
+  final RssItem _item;
+  final AnimationController _animationController;
+
+  @override
+  Widget build(BuildContext context) {
+    final podcast = Provider.of<Podcast>(context);
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: <Widget>[
+        Hero(
+            child: ClipOval(
+              child: Consumer<DownloadManager>(
+                  child: Image.network(podcast.feed.image.url),
+                  builder: (BuildContext context, DownloadManager manager,
+                      Widget child) {
+                    var percentDownloaded =
+                        manager.downloadStatus(_item).percentDownloaded;
+                    return AnimatedOpacity(
+                      duration: Duration(milliseconds: 100),
+                      opacity: percentDownloaded * (1 - _defaultOpacity) +
+                          _defaultOpacity,
+                      child: child,
+                    );
+                  }),
+            ),
+            tag: _item.title),
+        DownloadButton(_item, _animationController),
+      ],
+    );
+  }
+}
+
+class DownloadButton extends StatelessWidget {
+  const DownloadButton(this._item, this._animationController);
+
+  final RssItem _item;
+  final AnimationController _animationController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<DownloadManager>(
+      builder: (BuildContext context, DownloadManager manager, Widget child) {
+        var status = manager.downloadStatus(_item);
+        return Visibility(
+          visible: status.percentDownloaded == 0,
+          child: child,
+        );
+      },
+      child: IconButton(
+          icon: Icon(Icons.file_download),
+          onPressed: () {
+            Provider.of<DownloadManager>(context).download(_item).then((_) =>
+                _animationController
+                    .forward()
+                    .then((_) => _animationController.reverse()));
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Downloading ${_item.title}'),
+              ),
+            );
+          }),
     );
   }
 }
@@ -197,7 +204,7 @@ class ElevationOnAnimate extends AnimatedWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
-        elevation: animation.value > 0 ? 3 : 0, // TODO(efortuna) ???
+        elevation: animation.value > 0 ? 3 : 0,
         child: child);
   }
 }
