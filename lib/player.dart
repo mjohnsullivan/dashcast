@@ -1,20 +1,35 @@
 import 'dart:async';
 
 import 'package:dashcast/main.dart';
+import 'package:dashcast/wave.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:provider/provider.dart';
 
+// TODO better name.
+class PlayAnimation with ChangeNotifier {
+  bool _isPlaying = false;
+
+  bool get isPlaying => _isPlaying;
+  set isPlaying(bool value) {
+    _isPlaying = value;
+    notifyListeners();
+  }
+}
+
 class PlayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          Provider.of<Podcast>(context).selectedItem.title,
+    return ChangeNotifierProvider(
+      builder: (_) => PlayAnimation(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            Provider.of<Podcast>(context).selectedItem.title,
+          ),
         ),
+        body: SafeArea(child: Player()),
       ),
-      body: SafeArea(child: Player()),
     );
   }
 }
@@ -26,20 +41,28 @@ class Player extends StatelessWidget {
     return Column(
       children: [
         Flexible(
-            flex: 8,
-            child: SingleChildScrollView(
-              child: Column(children: [
-                Hero(
-                    child: Image.network(podcast.feed.image.url),
-                    tag: podcast.selectedItem.title),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    podcast.selectedItem.description.trim(),
-                  ),
+          flex: 8,
+          child: SingleChildScrollView(
+            child: Column(children: [
+              Stack(
+                overflow: Overflow.visible,
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Hero(
+                      child: Image.network(podcast.feed.image.url),
+                      tag: podcast.selectedItem.title),
+                  Wave(size: Size(MediaQuery.of(context).size.width, 50)),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  podcast.selectedItem.description.trim(),
                 ),
-              ]),
-            )),
+              ),
+            ]),
+          ),
+        ),
         Flexible(
           flex: 2,
           child: Material(
@@ -123,6 +146,7 @@ class _PlaybackButtonState extends State<PlaybackButtons>
   @override
   Widget build(BuildContext context) {
     final item = Provider.of<Podcast>(context).selectedItem;
+    final animation = Provider.of<PlayAnimation>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -143,8 +167,10 @@ class _PlaybackButtonState extends State<PlaybackButtons>
               onPressed: () {
                 if (_isPlaying) {
                   _stop();
+                  animation.isPlaying = false;
                 } else {
                   _play(item.guid);
+                  animation.isPlaying = true;
                 }
               },
             ),
