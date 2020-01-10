@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 final deg2rad = pi / 180.0;
 final frequency = 4.0;
 final amplitude = 10.0;
+final maxDiff = 3.0;
 
 class Wave extends StatefulWidget {
   final Size size;
@@ -29,16 +30,25 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       vsync: this,
     );
 
-    _controller.addListener(() {
-      _points.clear();
-      for (int i = 0; i < widget.size.width; i++) {
-        double x = i.toDouble();
-        double y =
-            sin((_controller.value * 360 - i) % 360 * deg2rad * frequency) *
-                    amplitude +
-                (amplitude * 2);
+    Random r = Random();
+    for (int i = 0; i < widget.size.width; i++) {
+      double x = i.toDouble();
+      double y = r.nextDouble() * (widget.size.height * 0.8);
 
-        _points.add(Offset(x, y));
+      _points.add(Offset(x, y));
+    }
+
+    _controller.addListener(() {
+      Random r = Random();
+      for (int i = 0; i < _points.length; i++) {
+        var point = _points[i];
+
+        double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
+        double newY = max(0.0, point.dy + diff);
+        newY = min(widget.size.height, newY);
+
+        Offset newPoint = Offset(point.dx, newY);
+        _points[i] = newPoint;
       }
     });
   }
