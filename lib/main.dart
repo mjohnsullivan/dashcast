@@ -94,97 +94,84 @@ class _PodcastTileState extends State<PodcastTile>
     final podcast = Provider.of<Podcast>(context);
     return Padding(
       padding: const EdgeInsets.all(3.0),
-      child: AnimatedBuilder(
+      child: Wiggle(
+        animation: _animationController,
+        child: ElevationOnAnimate(
           animation: _animationController,
-          builder: (BuildContext context, _) {
-            // TODO child^.
-            return Wiggle(
-              animation: _animationController,
-              child: Material(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                elevation: _animationController.value > 0
-                    ? 3
-                    : 0, // TODO(efortuna) ???
-                child: ListTile(
-                  leading: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: <Widget>[
-                      Hero(
-                          child: ClipOval(
-                            child: Consumer<DownloadManager>(
-                                child: Image.network(podcast.feed.image.url),
-                                builder: (BuildContext context,
-                                    DownloadManager manager, Widget child) {
-                                  var percentDownloaded = manager
-                                          .downloadStatus(widget._item)
-                                          ?.percentDownloaded ??
-                                      0;
-                                  if (percentDownloaded == 1) {
-                                    _animationController.forward().then(
-                                        (_) => _animationController.reverse());
-                                  }
-                                  return AnimatedOpacity(
-                                    duration: Duration(milliseconds: 100),
-                                    opacity: percentDownloaded *
-                                            (1 - _defaultOpacity) +
-                                        _defaultOpacity,
-                                    child: child,
-                                  );
-                                }),
-                          ),
-                          tag: widget._item.title),
-                      Consumer<DownloadManager>(
-                        builder: (BuildContext context, DownloadManager manager,
-                            Widget child) {
-                          var status = manager.downloadStatus(widget._item);
-                          return Visibility(
-                            visible:
-                                status == null || status.percentDownloaded == 0,
-                            child: child,
-                          );
-                        },
-                        child: IconButton(
-                            icon: Icon(Icons.file_download),
-                            onPressed: () {
-                              Provider.of<DownloadManager>(context)
-                                  .download(widget._item);
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-                                  content:
-                                      Text('Downloading ${widget._item.title}'),
-                                ),
-                              );
-                            }),
-                      ),
-                    ],
-                  ),
-                  title: Text(widget._item.title),
-                  subtitle: Text(
-                    '\n' + widget._item.description.trim(),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  onTap: () {
-                    Provider.of<Podcast>(context).selectedItem = widget._item;
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => PlayerPage()),
+          child: ListTile(
+            leading: Stack(
+              alignment: AlignmentDirectional.center,
+              children: <Widget>[
+                Hero(
+                    child: ClipOval(
+                      child: Consumer<DownloadManager>(
+                          child: Image.network(podcast.feed.image.url),
+                          builder: (BuildContext context,
+                              DownloadManager manager, Widget child) {
+                            var percentDownloaded = manager
+                                .downloadStatus(widget._item)
+                                .percentDownloaded;
+                            return AnimatedOpacity(
+                              duration: Duration(milliseconds: 100),
+                              opacity:
+                                  percentDownloaded * (1 - _defaultOpacity) +
+                                      _defaultOpacity,
+                              child: child,
+                            );
+                          }),
+                    ),
+                    tag: widget._item.title),
+                Consumer<DownloadManager>(
+                  builder: (BuildContext context, DownloadManager manager,
+                      Widget child) {
+                    var status = manager.downloadStatus(widget._item);
+                    return Visibility(
+                      visible: status.percentDownloaded == 0,
+                      child: child,
                     );
                   },
+                  child: IconButton(
+                      icon: Icon(Icons.file_download),
+                      onPressed: () {
+                        Provider.of<DownloadManager>(context)
+                            .download(widget._item)
+                            .then((_) => _animationController
+                                .forward()
+                                .then((_) => _animationController.reverse()));
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Downloading ${widget._item.title}'),
+                          ),
+                        );
+                      }),
                 ),
-              ),
-            );
-          }),
+              ],
+            ),
+            title: Text(widget._item.title),
+            subtitle: Text(
+              '\n' + widget._item.description.trim(),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: () {
+              Provider.of<Podcast>(context).selectedItem = widget._item;
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => PlayerPage()),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
 
 class Wiggle extends AnimatedWidget {
-  final Widget child;
-  static final sinePeriod = Tween<double>(begin: 0, end: 2 * pi);
   Wiggle({@required Animation<double> animation, this.child})
       : super(listenable: sinePeriod.animate(animation));
+
+  final Widget child;
+  static final sinePeriod = Tween<double>(begin: 0, end: 2 * pi);
 
   @override
   Widget build(BuildContext context) {
@@ -194,5 +181,23 @@ class Wiggle extends AnimatedWidget {
       child: child,
       transform: Matrix4.translation(Vector3(offset, offset * 2, 0)),
     );
+  }
+}
+
+class ElevationOnAnimate extends AnimatedWidget {
+  ElevationOnAnimate({@required Animation<double> animation, this.child})
+      : super(listenable: animation);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    return Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        elevation: animation.value > 0 ? 3 : 0, // TODO(efortuna) ???
+        child: child);
   }
 }

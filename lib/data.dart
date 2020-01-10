@@ -28,18 +28,19 @@ class Podcast with ChangeNotifier {
 /// Info about whether a specific podcast episode has been downloaded.
 class DownloadManager with ChangeNotifier {
   final pathSuffix = 'dashcast/downloads';
-  Map<RssItem, DownloadData> _downloadData = {};
+  Map<RssItem, DownloadSnapshot> _downloadData = {};
 
   DownloadManager();
 
-  String downloadLocation(RssItem item) => _downloadData[item]?.location;
+  String downloadLocation(RssItem item) => downloadStatus(item).location;
 
   double percentDownloaded(RssItem item) =>
-      _downloadData[item]?.percentDownloaded;
+      downloadStatus(item).percentDownloaded;
 
-  DownloadData downloadStatus(RssItem item) => _downloadData[item];
+  DownloadSnapshot downloadStatus(RssItem item) =>
+      _downloadData[item] ?? DownloadSnapshot(item);
 
-  void download(RssItem item) async {
+  Future download(RssItem item) async {
     final req = http.Request('GET', Uri.parse(item.guid));
     final res = await req.send();
     if (res.statusCode != 200)
@@ -49,8 +50,8 @@ class DownloadManager with ChangeNotifier {
     var downloadedLength = 0;
 
     final file = File(await _getDownloadPath(path.split(item.guid).last));
-    _downloadData[item] = DownloadData(item);
-    res.stream
+    _downloadData[item] = DownloadSnapshot(item);
+    return res.stream
         .map((chunk) {
           downloadedLength += chunk.length;
           _downloadData[item].percentDownloaded =
@@ -76,9 +77,9 @@ class DownloadManager with ChangeNotifier {
   }
 }
 
-class DownloadData {
+class DownloadSnapshot {
   RssItem episode;
   String location;
   double percentDownloaded = 0;
-  DownloadData(this.episode);
+  DownloadSnapshot(this.episode);
 }
