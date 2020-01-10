@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dashcast/main.dart';
+import 'package:dashcast/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:provider/provider.dart';
@@ -123,6 +123,8 @@ class _PlaybackButtonState extends State<PlaybackButtons>
   @override
   Widget build(BuildContext context) {
     final podcast = Provider.of<Podcast>(context);
+    final downloadLocation = Provider.of<DownloadManager>(context)
+        .downloadLocation(podcast.selectedItem);
     final item = podcast.selectedItem;
 
     return Column(
@@ -144,9 +146,7 @@ class _PlaybackButtonState extends State<PlaybackButtons>
                 if (_isPlaying) {
                   _stop();
                 } else {
-                  _play(podcast.downloadedFiles.containsKey(item)
-                      ? podcast.downloadedFiles[item]
-                      : item.guid);
+                  _play(downloadLocation ?? item.guid);
                 }
               },
             ),
