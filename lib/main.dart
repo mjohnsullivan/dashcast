@@ -115,14 +115,19 @@ class _PodcastTileState extends State<PodcastTile>
                           child: ClipOval(
                             child: Consumer<DownloadManager>(
                                 child: Image.network(podcast.feed.image.url),
-                                builder: (_, downloadInfo, child) {
-                                  if (downloadInfo.percentDownloaded == 1) {
+                                builder: (BuildContext context,
+                                    DownloadManager manager, Widget child) {
+                                  var percentDownloaded = manager
+                                          .downloadStatus(widget._item)
+                                          ?.percentDownloaded ??
+                                      0;
+                                  if (percentDownloaded == 1) {
                                     _animationController.forward().then(
                                         (_) => _animationController.reverse());
                                   }
                                   return AnimatedOpacity(
                                     duration: Duration(milliseconds: 100),
-                                    opacity: downloadInfo.percentDownloaded *
+                                    opacity: percentDownloaded *
                                             (1 - _defaultOpacity) +
                                         _defaultOpacity,
                                     child: child,
@@ -130,28 +135,28 @@ class _PodcastTileState extends State<PodcastTile>
                                 }),
                           ),
                           tag: widget._item.title),
-                      Selector<DownloadManager, bool>(
-                        selector: (_, downloadInfo) =>
-                            downloadInfo.percentDownloaded == 0,
-                        builder: (BuildContext context, bool isVisible,
+                      Consumer<DownloadManager>(
+                        builder: (BuildContext context, DownloadManager manager,
                             Widget child) {
-                          return IconButton(
-                              icon: Icon(Icons.file_download),
-                              onPressed: () {
-                                Provider.of<DownloadManager>(context)
-                                    .download();
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        'Downloading ${widget._item.title}'),
-                                  ),
-                                );
-                              }); //TODO
+                          var status = manager.downloadStatus(widget._item);
                           return Visibility(
-                            visible: isVisible,
+                            visible:
+                                status == null || status.percentDownloaded == 0,
                             child: child,
                           );
                         },
+                        child: IconButton(
+                            icon: Icon(Icons.file_download),
+                            onPressed: () {
+                              Provider.of<DownloadManager>(context)
+                                  .download(widget._item);
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                      Text('Downloading ${widget._item.title}'),
+                                ),
+                              );
+                            }),
                       ),
                     ],
                   ),

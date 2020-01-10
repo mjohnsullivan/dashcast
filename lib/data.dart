@@ -28,17 +28,19 @@ class Podcast with ChangeNotifier {
 /// Info about whether a specific podcast episode has been downloaded.
 class DownloadManager with ChangeNotifier {
   final pathSuffix = 'dashcast/downloads';
-  Map<RssItem, String> _downloads = {};
-  Map<RssItem, double> _percentDownloaded = {};
+  Map<RssItem, DownloadData> _downloadData = {};
 
   DownloadManager();
 
-  String downloadLocation(RssItem item) => _downloads[item];
+  String downloadLocation(RssItem item) => _downloadData[item]?.location;
 
-  double percentDownloaded(RssItem item) => _percentDownloaded[item];
+  double percentDownloaded(RssItem item) =>
+      _downloadData[item]?.percentDownloaded;
 
-  void download(RssItem episode) async {
-    final req = http.Request('GET', Uri.parse(episode.guid));
+  DownloadData downloadStatus(RssItem item) => _downloadData[item];
+
+  void download(RssItem item) async {
+    final req = http.Request('GET', Uri.parse(item.guid));
     final res = await req.send();
     if (res.statusCode != 200)
       throw Exception('Unexpected HTTP code: ${res.statusCode}');
@@ -46,17 +48,19 @@ class DownloadManager with ChangeNotifier {
     final contentLength = res.contentLength;
     var downloadedLength = 0;
 
-    final file = File(await _getDownloadPath(path.split(episode.guid).last));
+    final file = File(await _getDownloadPath(path.split(item.guid).last));
+    _downloadData[item] = DownloadData(item);
     res.stream
         .map((chunk) {
           downloadedLength += chunk.length;
-          _percentDownloaded[episode] = downloadedLength / contentLength;
+          _downloadData[item].percentDownloaded =
+              downloadedLength / contentLength;
           notifyListeners();
           return chunk;
         })
         .pipe(file.openWrite())
         .whenComplete(() {
-          _downloads[episode] = file.path;
+          _downloadData[item].location = file.path;
           print('Downloading complete ${file.path}');
           notifyListeners();
         })
@@ -70,4 +74,11 @@ class DownloadManager with ChangeNotifier {
     print(absolutePath);
     return absolutePath;
   }
+}
+
+class DownloadData {
+  RssItem episode;
+  String location;
+  double percentDownloaded = 0;
+  DownloadData(this.episode);
 }
