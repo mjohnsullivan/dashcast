@@ -51,7 +51,13 @@ class Player extends StatelessWidget {
                   Hero(
                       child: Image.network(podcast.feed.image.url),
                       tag: podcast.selectedItem.title),
-                  Wave(size: Size(MediaQuery.of(context).size.width, 50)),
+                  AnimatedOpacity(
+                      opacity: Provider.of<PlayAnimation>(context).isPlaying
+                          ? 1.0
+                          : 0.0,
+                      duration: Duration(seconds: 1),
+                      child: Wave(
+                          size: Size(MediaQuery.of(context).size.width, 50))),
                 ],
               ),
               Padding(
