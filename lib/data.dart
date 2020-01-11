@@ -8,7 +8,7 @@ import 'package:path/path.dart' as path;
 
 class Podcast with ChangeNotifier {
   RssFeed _feed;
-  RssItem _selectedItem;
+  Episode _selectedEpisode;
 
   RssFeed get feed => _feed;
   void parse(String url) async {
@@ -18,29 +18,30 @@ class Podcast with ChangeNotifier {
     notifyListeners();
   }
 
-  RssItem get selectedItem => _selectedItem;
-  set selectedItem(RssItem value) {
-    _selectedItem = value;
+  Episode get selectedEpisode => _selectedEpisode;
+  set selectedEpisode(Episode value) {
+    _selectedEpisode = value;
     notifyListeners();
   }
 }
 
-/// Info about whether a specific podcast episode has been downloaded.
-class DownloadManager with ChangeNotifier {
-  final pathSuffix = 'dashcast/downloads';
-  Map<RssItem, DownloadSnapshot> _downloadData = {};
+class Episode with ChangeNotifier {
+  Episode(this.item);
 
-  DownloadManager();
+  bool _hasNotifiedDownloaded = false;
+  RssItem item;
+  String _location;
+  double _percentDownloaded = 0;
 
-  String downloadLocation(RssItem item) => downloadStatus(item).location;
+  double get percentDownloaded => _percentDownloaded;
 
-  double percentDownloaded(RssItem item) =>
-      downloadStatus(item).percentDownloaded;
+  bool get hasNotifiedDownloaded => _hasNotifiedDownloaded;
 
-  DownloadSnapshot downloadStatus(RssItem item) =>
-      _downloadData[item] ?? DownloadSnapshot(item);
+  void downloadNotified() => _hasNotifiedDownloaded = true;
 
-  Future download(RssItem item) async {
+  String get downloadLocation => _location;
+
+  Future download() async {
     final req = http.Request('GET', Uri.parse(item.guid));
     final res = await req.send();
     if (res.statusCode != 200)
@@ -50,18 +51,16 @@ class DownloadManager with ChangeNotifier {
     var downloadedLength = 0;
 
     final file = File(await _getDownloadPath(path.split(item.guid).last));
-    _downloadData[item] = DownloadSnapshot(item);
     return res.stream
         .map((chunk) {
           downloadedLength += chunk.length;
-          _downloadData[item].percentDownloaded =
-              downloadedLength / contentLength;
+          _percentDownloaded = downloadedLength / contentLength;
           notifyListeners();
           return chunk;
         })
         .pipe(file.openWrite())
         .whenComplete(() {
-          _downloadData[item].location = file.path;
+          _location = file.path;
           print('Downloading complete ${file.path}');
           notifyListeners();
         })
@@ -75,11 +74,4 @@ class DownloadManager with ChangeNotifier {
     print(absolutePath);
     return absolutePath;
   }
-}
-
-class DownloadSnapshot {
-  RssItem episode;
-  String location;
-  double percentDownloaded = 0;
-  DownloadSnapshot(this.episode);
 }

@@ -25,7 +25,7 @@ class PlayerPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            Provider.of<Podcast>(context).selectedItem.title,
+            Provider.of<Podcast>(context).selectedEpisode.item.title,
           ),
         ),
         body: SafeArea(child: Player()),
@@ -50,7 +50,7 @@ class Player extends StatelessWidget {
                 children: <Widget>[
                   Hero(
                       child: Image.network(podcast.feed.image.url),
-                      tag: podcast.selectedItem.title),
+                      tag: podcast.selectedEpisode.item.title),
                   AnimatedOpacity(
                       opacity: Provider.of<PlayAnimation>(context).isPlaying
                           ? 1.0
@@ -63,7 +63,7 @@ class Player extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  podcast.selectedItem.description.trim(),
+                  podcast.selectedEpisode.item.description.trim(),
                 ),
               ),
             ]),
@@ -151,9 +151,10 @@ class _PlaybackButtonState extends State<PlaybackButtons>
 
   @override
   Widget build(BuildContext context) {
-    final item = Provider.of<Podcast>(context).selectedItem;
-    final downloadLocation =
-        Provider.of<DownloadManager>(context).downloadLocation(item);
+    final episode = Provider.of<Podcast>(context).selectedEpisode;
+    final item = episode.item;
+    final downloadLocation = episode.downloadLocation;
+
     final animation = Provider.of<PlayAnimation>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
