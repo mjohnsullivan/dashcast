@@ -64,7 +64,7 @@ class _PodcastTileState extends State<PodcastTile>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 100),
+      duration: Duration(milliseconds: 200),
       vsync: this,
     );
   }
@@ -79,25 +79,21 @@ class _PodcastTileState extends State<PodcastTile>
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(3.0),
-      child: Wiggle(
-        animation: _animationController,
-        child: ElevationOnAnimate(
-          animation: _animationController,
-          child: ListTile(
-            leading: DownloadControl(widget._item, _animationController),
-            title: Text(widget._item.title),
-            subtitle: Text(
-              '\n' + widget._item.description.trim(),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: () {
-              Provider.of<Podcast>(context).selectedItem = widget._item;
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => PlayerPage()),
-              );
-            },
+      child: AlertWiggle(
+        child: ListTile(
+          leading: DownloadControl(widget._item, _animationController),
+          title: Text(widget._item.title),
+          subtitle: Text(
+            '\n' + widget._item.description.trim(),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
+          onTap: () {
+            Provider.of<Podcast>(context).selectedItem = widget._item;
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => PlayerPage()),
+            );
+          },
         ),
       ),
     );
@@ -159,10 +155,9 @@ class DownloadButton extends StatelessWidget {
       child: IconButton(
           icon: Icon(Icons.file_download),
           onPressed: () {
-            Provider.of<DownloadManager>(context).download(_item).then((_) =>
-                _animationController
-                    .forward()
-                    .then((_) => _animationController.reverse()));
+            Provider.of<DownloadManager>(context)
+                .download(_item)
+                .then((_) => _animationController.forward());
             Scaffold.of(context).showSnackBar(
               SnackBar(
                 content: Text('Downloading ${_item.title}'),
@@ -173,38 +168,38 @@ class DownloadButton extends StatelessWidget {
   }
 }
 
-class Wiggle extends AnimatedWidget {
-  Wiggle({@required Animation<double> animation, this.child})
-      : super(listenable: sinePeriod.animate(animation));
+class AlertWiggle extends StatefulWidget {
+  AlertWiggle({this.child});
 
   final Widget child;
-  static final sinePeriod = Tween<double>(begin: 0, end: 2 * pi);
 
   @override
-  Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    var offset = sin(animation.value);
-    return Transform(
-      child: child,
-      transform: Matrix4.translation(Vector3(offset, offset * 2, 0)),
-    );
-  }
+  State<StatefulWidget> createState() => _AlertWiggleState();
 }
 
-class ElevationOnAnimate extends AnimatedWidget {
-  ElevationOnAnimate({@required Animation<double> animation, this.child})
-      : super(listenable: animation);
-
-  final Widget child;
+class _AlertWiggleState extends State<AlertWiggle> {
+  static final sinePeriod = 2 * pi;
+  double _endValue = 0;
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return Material(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-        elevation: animation.value > 0 ? 3 : 0,
-        child: child);
+    return TweenAnimationBuilder(
+        tween: Tween<double>(begin: 0, end: _endValue),
+        duration: Duration(milliseconds: 200),
+        child: widget.child,
+        builder: (_, double value, Widget child) {
+          var offset = sin(value * 2);
+          return Transform(
+              transform: Matrix4.translation(Vector3(offset, offset * 2, 0)),
+              child: Material(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                elevation: value == 0 || value == _endValue
+                    ? 3
+                    : 0, // TODO: or animation.status.
+                child: child,
+              ));
+        });
   }
 }
