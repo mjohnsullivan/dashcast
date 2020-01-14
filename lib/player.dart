@@ -1,27 +1,16 @@
 import 'dart:async';
 
-import 'package:dashcast/data.dart';
+import 'package:dashcast/notifiers.dart';
 import 'package:dashcast/wave.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound/flutter_sound.dart' as sound;
 import 'package:provider/provider.dart';
-
-// TODO better name.
-class PlayAnimation with ChangeNotifier {
-  bool _isPlaying = false;
-
-  bool get isPlaying => _isPlaying;
-  set isPlaying(bool value) {
-    _isPlaying = value;
-    notifyListeners();
-  }
-}
 
 class PlayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (_) => PlayAnimation(),
+      builder: (_) => PlayStatus(),
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -52,7 +41,7 @@ class Player extends StatelessWidget {
                       child: Image.network(podcast.feed.image.url),
                       tag: podcast.selectedEpisode.item.title),
                   AnimatedOpacity(
-                      opacity: Provider.of<PlayAnimation>(context).isPlaying
+                      opacity: Provider.of<PlayStatus>(context).isPlaying
                           ? 1.0
                           : 0.0,
                       duration: Duration(seconds: 1),
@@ -99,16 +88,15 @@ class PlaybackButtons extends StatefulWidget {
 
 class _PlaybackButtonState extends State<PlaybackButtons>
     with SingleTickerProviderStateMixin {
-  bool _isPlaying = false;
-  FlutterSound _sound;
+  sound.FlutterSound _sound;
   double _playPosition;
-  StreamSubscription<PlayStatus> _playerSubscription;
+  StreamSubscription<sound.PlayStatus> _playerSubscription;
   AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    _sound = FlutterSound();
+    _sound = sound.FlutterSound();
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _playPosition = 0;
@@ -116,7 +104,8 @@ class _PlaybackButtonState extends State<PlaybackButtons>
 
   @override
   void dispose() {
-    // TODO cleanly clean things up. Since _cleanup is async, sometimes the _playerSubscription listener calls setState after dispose but before it's canceled.
+    // TODO cleanly clean things up. Since _cleanup is async, sometimes the
+    // _playerSubscription listener calls setState after dispose but before it's canceled.
     _cleanup();
     _animationController.dispose();
     super.dispose();
@@ -130,24 +119,21 @@ class _PlaybackButtonState extends State<PlaybackButtons>
   void _stop() async {
     await _sound.stopPlayer();
     _animationController.reverse();
-    _isPlaying = false;
+    final animation = Provider.of<PlayStatus>(context);
+    animation.isPlaying = false;
   }
 
   void _play(String url) async {
     _animationController.forward();
-    _isPlaying = true;
+    final animation = Provider.of<PlayStatus>(context);
+    animation.isPlaying = true;
     await _sound.startPlayer(url);
     _playerSubscription = _sound.onPlayerStateChanged.listen((e) {
       if (e != null) {
-        //print(e.currentPosition);
         setState(() => _playPosition = (e.currentPosition / e.duration));
       }
     });
   }
-
-  void _fastForward() {}
-
-  void _rewind() {}
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +141,7 @@ class _PlaybackButtonState extends State<PlaybackButtons>
     final item = episode.item;
     final downloadLocation = episode.downloadLocation;
 
-    final animation = Provider.of<PlayAnimation>(context);
+    final animation = Provider.of<PlayStatus>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -172,12 +158,10 @@ class _PlaybackButtonState extends State<PlaybackButtons>
                   icon: AnimatedIcons.play_pause,
                   progress: _animationController),
               onPressed: () {
-                if (_isPlaying) {
+                if (animation.isPlaying) {
                   _stop();
-                  animation.isPlaying = false;
                 } else {
                   _play(downloadLocation ?? item.guid);
-                  animation.isPlaying = true;
                 }
               },
             ),

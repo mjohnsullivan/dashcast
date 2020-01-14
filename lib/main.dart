@@ -4,7 +4,7 @@
 
 import 'dart:math';
 
-import 'package:dashcast/data.dart';
+import 'package:dashcast/notifiers.dart';
 import 'package:dashcast/player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -135,6 +135,7 @@ class DownloadButton extends StatelessWidget {
   }
 }
 
+// TODO(fitza): make stateless?
 class AlertWiggle extends StatefulWidget {
   AlertWiggle({this.child});
 

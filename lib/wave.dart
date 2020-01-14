@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dashcast/player.dart';
+import 'package:dashcast/notifiers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +61,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlayAnimation>(
+    return Consumer<PlayStatus>(
       builder: (context, player, child) {
         if (player.isPlaying) {
           _controller.repeat();
