@@ -30,6 +30,26 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       vsync: this,
     );
 
+    _initPoints();
+
+    _controller.addListener(_newPoints);
+  }
+
+  void _newPoints() {
+    Random r = Random();
+    for (int i = 0; i < _points.length; i++) {
+      var point = _points[i];
+
+      double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
+      double newY = max(0.0, point.dy + diff);
+      newY = min(widget.size.height, newY);
+
+      Offset newPoint = Offset(point.dx, newY);
+      _points[i] = newPoint;
+    }
+  }
+
+  void _initPoints() {
     Random r = Random();
     for (int i = 0; i < widget.size.width; i++) {
       double x = i.toDouble();
@@ -37,20 +57,6 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
 
       _points.add(Offset(x, y));
     }
-
-    _controller.addListener(() {
-      Random r = Random();
-      for (int i = 0; i < _points.length; i++) {
-        var point = _points[i];
-
-        double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
-        double newY = max(0.0, point.dy + diff);
-        newY = min(widget.size.height, newY);
-
-        Offset newPoint = Offset(point.dx, newY);
-        _points[i] = newPoint;
-      }
-    });
   }
 
   @override
@@ -102,13 +108,64 @@ class WaveClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
+    // var path = _soundWave(size);
+    var path = _sineWave(size);
+    return path;
+  }
+
+  Path _soundWave(Size size) {
     var path = Path();
     path.addPolygon(wavePoints, false);
 
     path.lineTo(size.width, size.height);
     path.lineTo(0.0, size.height);
     path.close();
+    return path;
+  }
 
+  Path _sineWave(Size size) {
+    List<Offset> sinePoints = [];
+    final speed = 2;
+
+    for (int i = 0; i < size.width; i++) {
+      double y = (size.height / 3) * sin(0.075 * i - (speed * value * 2 * pi)) +
+          (size.height / 2);
+
+      Offset newPoint = Offset(i.toDouble(), y);
+      sinePoints.add(newPoint);
+    }
+
+    var path = Path();
+    path.addPolygon(sinePoints, false);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  Path _bezierWave(Size size) {
+    /*
+    Adapted from 
+    https://github.com/felixblaschke/simple_animations_example_app/blob/master/lib/examples/fancy_background.dart
+    */
+
+    final v = value * pi * 2;
+    final path = Path();
+
+    final y1 = sin(v);
+    final y2 = sin(v + pi / 2);
+    final y3 = sin(v + pi);
+
+    final startPointY = size.height * (0.5 + 0.4 * y1);
+    final controlPointY = size.height * (0.5 + 0.4 * y2);
+    final endPointY = size.height * (0.5 + 0.4 * y3);
+
+    path.moveTo(size.width * 0, startPointY);
+    path.quadraticBezierTo(
+        size.width / 5, controlPointY, size.width, endPointY);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
     return path;
   }
 

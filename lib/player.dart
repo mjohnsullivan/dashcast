@@ -17,7 +17,7 @@ class EpisodeImage extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        Hero(child: Image.network(url), tag: title),
+        Image.network(url),
         AnimatedOpacity(
             opacity: Provider.of<PlayStatus>(context).isPlaying ? 1.0 : 0.0,
             duration: Duration(seconds: 1),
@@ -36,6 +36,14 @@ class PlayPauseIcon extends StatelessWidget {
     return Icon(playStatus.isPlaying ? Icons.pause : Icons.play_arrow);
   }
 }
+
+/*
+
+
+App infra below this line.
+
+
+*/
 
 class PlayerPage extends StatelessWidget {
   @override
