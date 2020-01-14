@@ -131,7 +131,7 @@ class OpacityOverlay extends StatelessWidget {
           end: FractionalOffset.bottomCenter,
           colors: [
             Colors.blue,
-            Colors.blue.withOpacity(0.0),
+            Colors.blue.withOpacity(0.25),
           ],
           stops: [0.0, 1.0],
         ),

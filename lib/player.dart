@@ -6,6 +6,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart' as sound;
 import 'package:provider/provider.dart';
 
+class EpisodeImage extends StatelessWidget {
+  final url;
+  final title;
+
+  const EpisodeImage({Key key, this.url, this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: <Widget>[
+        Hero(child: Image.network(url), tag: title),
+        AnimatedOpacity(
+            opacity: Provider.of<PlayStatus>(context).isPlaying ? 1.0 : 0.0,
+            duration: Duration(seconds: 1),
+            child: Wave(size: Size(MediaQuery.of(context).size.width, 50))),
+      ],
+    );
+  }
+}
+
+class PlayPauseIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final playStatus = Provider.of<PlayStatus>(context);
+
+    // TODO(live): convert to AnimatedIcon
+    return Icon(playStatus.isPlaying ? Icons.pause : Icons.play_arrow);
+  }
+}
+
 class PlayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,21 +64,9 @@ class Player extends StatelessWidget {
           flex: 8,
           child: SingleChildScrollView(
             child: Column(children: [
-              Stack(
-                overflow: Overflow.visible,
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Hero(
-                      child: Image.network(podcast.feed.image.url),
-                      tag: podcast.selectedEpisode.item.title),
-                  AnimatedOpacity(
-                      opacity: Provider.of<PlayStatus>(context).isPlaying
-                          ? 1.0
-                          : 0.0,
-                      duration: Duration(seconds: 1),
-                      child: Wave(
-                          size: Size(MediaQuery.of(context).size.width, 50))),
-                ],
+              EpisodeImage(
+                url: podcast.feed.image.url,
+                title: podcast.selectedEpisode.item.title,
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -86,19 +105,15 @@ class PlaybackButtons extends StatefulWidget {
   _PlaybackButtonState createState() => _PlaybackButtonState();
 }
 
-class _PlaybackButtonState extends State<PlaybackButtons>
-    with SingleTickerProviderStateMixin {
+class _PlaybackButtonState extends State<PlaybackButtons> {
   sound.FlutterSound _sound;
   double _playPosition;
   StreamSubscription<sound.PlayStatus> _playerSubscription;
-  AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _sound = sound.FlutterSound();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _playPosition = 0;
   }
 
@@ -107,7 +122,6 @@ class _PlaybackButtonState extends State<PlaybackButtons>
     // TODO cleanly clean things up. Since _cleanup is async, sometimes the
     // _playerSubscription listener calls setState after dispose but before it's canceled.
     _cleanup();
-    _animationController.dispose();
     super.dispose();
   }
 
@@ -118,15 +132,13 @@ class _PlaybackButtonState extends State<PlaybackButtons>
 
   void _stop() async {
     await _sound.stopPlayer();
-    _animationController.reverse();
-    final animation = Provider.of<PlayStatus>(context);
-    animation.isPlaying = false;
+    final playStatus = Provider.of<PlayStatus>(context);
+    playStatus.isPlaying = false;
   }
 
   void _play(String url) async {
-    _animationController.forward();
-    final animation = Provider.of<PlayStatus>(context);
-    animation.isPlaying = true;
+    final playStatus = Provider.of<PlayStatus>(context);
+    playStatus.isPlaying = true;
     await _sound.startPlayer(url);
     _playerSubscription = _sound.onPlayerStateChanged.listen((e) {
       if (e != null) {
@@ -141,7 +153,7 @@ class _PlaybackButtonState extends State<PlaybackButtons>
     final item = episode.item;
     final downloadLocation = episode.downloadLocation;
 
-    final animation = Provider.of<PlayStatus>(context);
+    final playStatus = Provider.of<PlayStatus>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -154,11 +166,9 @@ class _PlaybackButtonState extends State<PlaybackButtons>
           children: <Widget>[
             IconButton(icon: Icon(Icons.fast_rewind), onPressed: null),
             IconButton(
-              icon: AnimatedIcon(
-                  icon: AnimatedIcons.play_pause,
-                  progress: _animationController),
+              icon: PlayPauseIcon(),
               onPressed: () {
-                if (animation.isPlaying) {
+                if (playStatus.isPlaying) {
                   _stop();
                 } else {
                   _play(downloadLocation ?? item.guid);

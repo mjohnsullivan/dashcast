@@ -20,17 +20,8 @@ class AlertWiggle extends StatelessWidget {
         episode.downloadNotified();
       }
 
-      return null;
-      // TODO(live): replace null with:
-      /*
-      TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: _endValue),
-          duration: Duration(milliseconds: 200),
-          child: child,
-          builder: (_, double value, Widget child) {
-            return _transform(child: child, value: value);
-          });
-      */
+      // TODO(live): wrap child in TweenAnimationBuilder
+      return child;
     });
   }
 

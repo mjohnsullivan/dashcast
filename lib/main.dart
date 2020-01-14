@@ -8,24 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'alert_wiggle.dart';
-import 'package:webfeed/domain/rss_item.dart';
 
 final url = 'https://itsallwidgets.com/podcast/feed';
 
 void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (_) => Podcast()..parse(url),
-      child: MaterialApp(
-        title: 'Dashcast',
-        home: EpisodesPage(),
-      ),
-    );
-  }
-}
 
 class EpisodeTile extends StatelessWidget {
   @override
@@ -33,21 +19,18 @@ class EpisodeTile extends StatelessWidget {
     final episode = Provider.of<Episode>(context);
     final item = episode.item;
 
-    return Padding(
-      padding: const EdgeInsets.all(3.0),
-      // TODO(live): Wrap with AlertWiggle
-      child: ListTile(
-        leading: DownloadControl(),
-        title: Text(item.title),
-        subtitle: _subtitle(item),
-        onTap: () => _onTap(context, episode),
-      ),
+    // TODO(live): Wrap with AlertWiggle
+    return ListTile(
+      leading: DownloadControl(),
+      title: Text(item.title),
+      subtitle: _subtitle(item.description),
+      onTap: () => _onTap(context, episode),
     );
   }
 
-  Text _subtitle(RssItem item) {
+  Text _subtitle(String description) {
     return Text(
-      '\n' + item.description.trim(),
+      '\n' + description.trim(),
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
     );
@@ -61,10 +44,10 @@ class EpisodeTile extends StatelessWidget {
   }
 }
 
-class EpisodeImage extends StatelessWidget {
+class LeadingImage extends StatelessWidget {
   final _defaultOpacity = .15;
 
-  const EpisodeImage({
+  const LeadingImage({
     Key key,
     @required this.podcast,
   }) : super(key: key);
@@ -75,24 +58,39 @@ class EpisodeImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Episode>(
       builder: (BuildContext context, Episode episode, Widget child) {
-        var percentDownloaded = episode.percentDownloaded;
-        return AnimatedOpacity(
-          duration: Duration(milliseconds: 100),
-          opacity: _getOpacity(percentDownloaded),
-          child: child,
-        );
+        // TODO(live): wrap with AnimatedOpacity, basing opacity on episode percentDownloaded
+        return child;
       },
-      child: Hero(
-        child: ClipOval(
-          child: Image.network(podcast.feed.image.url),
-        ),
-        tag: Provider.of<Episode>(context).item.title,
+      // TODO(live): wrap with Hero. Tag: episode title.
+      child: ClipOval(
+        child: Image.network(podcast.feed.image.url),
       ),
     );
   }
 
   double _getOpacity(double percentDownloaded) =>
       percentDownloaded * (1 - _defaultOpacity) + _defaultOpacity;
+}
+
+/*
+
+
+App infra below this line.
+
+
+*/
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      builder: (_) => Podcast()..parse(url),
+      child: MaterialApp(
+        title: 'Dashcast',
+        home: EpisodesPage(),
+      ),
+    );
+  }
 }
 
 class EpisodesPage extends StatelessWidget {
@@ -129,7 +127,10 @@ class EpisodeList extends StatelessWidget {
           .map(
             (i) => ChangeNotifierProvider(
               builder: (_) => Episode(i),
-              child: EpisodeTile(),
+              child: Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: EpisodeTile(),
+              ),
             ),
           )
           .toList(),
@@ -144,7 +145,7 @@ class DownloadControl extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: <Widget>[
-        EpisodeImage(podcast: podcast),
+        LeadingImage(podcast: podcast),
         DownloadButton(),
       ],
     );
