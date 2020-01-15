@@ -162,8 +162,8 @@ class _AlertWiggleState extends State<AlertWiggle> {
           child: widget.child,
           builder: (_, double value, Widget child) {
             var offset = sin(value * 2);
-            return Transform(
-                transform: Matrix4.translation(Vector3(offset, offset * 2, 0)),
+            return Transform.translate(
+                offset: Offset(offset, offset * 2),
                 child: Material(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
