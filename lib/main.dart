@@ -44,34 +44,6 @@ class EpisodeTile extends StatelessWidget {
   }
 }
 
-class LeadingImage extends StatelessWidget {
-  final _defaultOpacity = .15;
-
-  const LeadingImage({
-    Key key,
-    @required this.podcast,
-  }) : super(key: key);
-
-  final Podcast podcast;
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<Episode>(
-      builder: (BuildContext context, Episode episode, Widget child) {
-        // TODO(live): wrap with AnimatedOpacity, basing opacity on episode percentDownloaded
-        return child;
-      },
-      // TODO(live): wrap with Hero. Tag: episode title.
-      child: ClipOval(
-        child: Image.network(podcast.feed.image.url),
-      ),
-    );
-  }
-
-  double _getOpacity(double percentDownloaded) =>
-      percentDownloaded * (1 - _defaultOpacity) + _defaultOpacity;
-}
-
 /*
 
 
@@ -141,11 +113,9 @@ class EpisodeList extends StatelessWidget {
 class DownloadControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final podcast = Provider.of<Podcast>(context);
     return Stack(
       alignment: AlignmentDirectional.center,
       children: <Widget>[
-        LeadingImage(podcast: podcast),
         DownloadButton(),
       ],
     );
