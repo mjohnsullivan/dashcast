@@ -153,7 +153,7 @@ class _AlertWiggleState extends State<AlertWiggle> {
   Widget build(BuildContext context) {
     return Consumer<Episode>(builder: (_, episode, __) {
       if (episode.percentDownloaded == 1 && !episode.hasNotifiedDownloaded) {
-        _endValue += sinePeriod;
+        _endValue = sinePeriod;
         episode.downloadNotified();
       }
       return TweenAnimationBuilder(
