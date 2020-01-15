@@ -19,8 +19,7 @@ class EpisodeImage extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        // TODO(live): wrap in hero. Tag: title.
-        Image.network(url),
+        Hero(child: Image.network(url), tag: title),
         // TODO(live): Do the Wave!
       ],
     );
@@ -41,16 +40,22 @@ class PlaybackButtons extends StatefulWidget {
   _PlaybackButtonState createState() => _PlaybackButtonState();
 }
 
-class _PlaybackButtonState extends State<PlaybackButtons> {
+class _PlaybackButtonState extends State<PlaybackButtons>
+    with SingleTickerProviderStateMixin {
   sound.FlutterSound _sound;
   double _playPosition;
   StreamSubscription<sound.PlayStatus> _playerSubscription;
+  AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _sound = sound.FlutterSound();
     _playPosition = 0;
+    _animationController = AnimationController(
+      duration: Duration(milliseconds: 300),
+      vsync: this,
+    );
   }
 
   @override
@@ -58,6 +63,7 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
     // TODO cleanly clean things up. Since _cleanup is async, sometimes the
     // _playerSubscription listener calls setState after dispose but before it's canceled.
     _cleanup();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -99,12 +105,16 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
           children: <Widget>[
             RewindButton(),
             IconButton(
-              // TODO(live): Animate this Icon
-              icon: PlayPauseIcon(),
+              icon: AnimatedIcon(
+                progress: _animationController,
+                icon: AnimatedIcons.play_pause,
+              ),
               onPressed: () {
                 if (playStatus.isPlaying) {
+                  _animationController.reverse();
                   _stop();
                 } else {
+                  _animationController.forward();
                   _play(downloadLocation ?? item.guid);
                 }
               },
