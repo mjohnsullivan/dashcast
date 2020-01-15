@@ -160,19 +160,16 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
     final episode = Provider.of<Podcast>(context).selectedEpisode;
     final item = episode.item;
     final downloadLocation = episode.downloadLocation;
-
     final playStatus = Provider.of<PlayStatus>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Slider(
-          value: _playPosition,
-          onChanged: null,
-        ),
+        ProgressSlider(position: _playPosition),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            IconButton(icon: Icon(Icons.fast_rewind), onPressed: null),
+            RewindButton(),
             IconButton(
               icon: PlayPauseIcon(),
               onPressed: () {
@@ -183,13 +180,53 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
                 }
               },
             ),
-            IconButton(
-              icon: Icon(Icons.fast_forward),
-              onPressed: null,
-            ),
+            FastForward(),
           ],
         ),
       ],
     );
+  }
+}
+
+class ProgressSlider extends StatelessWidget {
+  const ProgressSlider({
+    Key key,
+    @required double position,
+  })  : _playPosition = position,
+        super(key: key);
+
+  final double _playPosition;
+
+  @override
+  Widget build(BuildContext context) {
+    return Slider(
+      value: _playPosition,
+      onChanged: null,
+    );
+  }
+}
+
+class FastForward extends StatelessWidget {
+  const FastForward({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.fast_forward),
+      onPressed: null,
+    );
+  }
+}
+
+class RewindButton extends StatelessWidget {
+  const RewindButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(icon: Icon(Icons.fast_rewind), onPressed: null);
   }
 }

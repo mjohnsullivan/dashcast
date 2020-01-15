@@ -16,7 +16,7 @@ class AlertWiggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Episode>(builder: (_, episode, __) {
       if (episode.percentDownloaded == 1 && !episode.hasNotifiedDownloaded) {
-        _endValue += sinePeriod;
+        _endValue = sinePeriod;
         episode.downloadNotified();
       }
 
@@ -26,7 +26,7 @@ class AlertWiggle extends StatelessWidget {
   }
 
   Widget _transform({@required Widget child, @required double value}) {
-    double offset = sin(value * 2);
+    double offset = sin(value);
     return Transform(
         transform: Matrix4.translation(Vector3(offset, offset * 2, 0)),
         child: Material(
