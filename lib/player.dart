@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:dashcast/notifiers.dart';
+//ignore: unused_import
 import 'package:dashcast/wave.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart' as sound;
 import 'package:provider/provider.dart';
@@ -17,11 +19,9 @@ class EpisodeImage extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
+        // TODO(live): wrap in hero. Tag: title.
         Image.network(url),
-        AnimatedOpacity(
-            opacity: Provider.of<PlayStatus>(context).isPlaying ? 1.0 : 0.0,
-            duration: Duration(seconds: 1),
-            child: Wave(size: Size(MediaQuery.of(context).size.width, 50))),
+        // TODO(live): Do the Wave!
       ],
     );
   }
@@ -32,79 +32,7 @@ class PlayPauseIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final playStatus = Provider.of<PlayStatus>(context);
 
-    // TODO(live): convert to AnimatedIcon
     return Icon(playStatus.isPlaying ? Icons.pause : Icons.play_arrow);
-  }
-}
-
-/*
-
-
-App infra below this line.
-
-
-*/
-
-class PlayerPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (_) => PlayStatus(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            Provider.of<Podcast>(context).selectedEpisode.item.title,
-          ),
-        ),
-        body: SafeArea(child: Player()),
-      ),
-    );
-  }
-}
-
-class Player extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final podcast = Provider.of<Podcast>(context);
-    return Column(
-      children: [
-        Flexible(
-          flex: 8,
-          child: SingleChildScrollView(
-            child: Column(children: [
-              EpisodeImage(
-                url: podcast.feed.image.url,
-                title: podcast.selectedEpisode.item.title,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  podcast.selectedEpisode.item.description.trim(),
-                ),
-              ),
-            ]),
-          ),
-        ),
-        Flexible(
-          flex: 2,
-          child: Material(
-            elevation: 12,
-            child: AudioControls(),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class AudioControls extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        PlaybackButtons(),
-      ],
-    );
   }
 }
 
@@ -171,6 +99,7 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
           children: <Widget>[
             RewindButton(),
             IconButton(
+              // TODO(live): Animate this Icon
               icon: PlayPauseIcon(),
               onPressed: () {
                 if (playStatus.isPlaying) {
@@ -183,6 +112,69 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
             FastForward(),
           ],
         ),
+      ],
+    );
+  }
+}
+
+class PlayerPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      builder: (_) => PlayStatus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            Provider.of<Podcast>(context).selectedEpisode.item.title,
+          ),
+        ),
+        body: SafeArea(child: Player()),
+      ),
+    );
+  }
+}
+
+class Player extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final podcast = Provider.of<Podcast>(context);
+    return Column(
+      children: [
+        Flexible(
+          flex: 8,
+          child: SingleChildScrollView(
+            child: Column(children: [
+              EpisodeImage(
+                url: podcast.feed.image.url,
+                title: podcast.selectedEpisode.item.title,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  podcast.selectedEpisode.item.description.trim(),
+                ),
+              ),
+            ]),
+          ),
+        ),
+        Flexible(
+          flex: 2,
+          child: Material(
+            elevation: 12,
+            child: AudioControls(),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class AudioControls extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        PlaybackButtons(),
       ],
     );
   }

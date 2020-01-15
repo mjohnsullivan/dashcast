@@ -7,6 +7,7 @@ import 'package:dashcast/player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//ignore: unused_import
 import 'alert_wiggle.dart';
 
 final url = 'https://itsallwidgets.com/podcast/feed';
@@ -43,6 +44,21 @@ class EpisodeTile extends StatelessWidget {
     );
   }
 }
+
+class DownloadControl extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: <Widget>[
+        //TODO(live): Add leading image
+        DownloadButton(),
+      ],
+    );
+  }
+}
+
+
 
 /*
 
@@ -106,18 +122,6 @@ class EpisodeList extends StatelessWidget {
             ),
           )
           .toList(),
-    );
-  }
-}
-
-class DownloadControl extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: <Widget>[
-        DownloadButton(),
-      ],
     );
   }
 }

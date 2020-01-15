@@ -73,3 +73,8 @@ ios/Podfile.lock
 ios/Flutter/flutter_export_environment.sh
 ios/Flutter/Flutter.podspec
 ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+android/.project
+android/.settings/org.eclipse.buildship.core.prefs
+android/app/.classpath
+android/app/.project
+android/app/.settings/org.eclipse.buildship.core.prefs

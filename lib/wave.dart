@@ -1,7 +1,9 @@
 import 'dart:math';
 
-import 'package:dashcast/notifiers.dart';
 import 'package:flutter/material.dart';
+//ignore: unused_import
+import 'package:dashcast/notifiers.dart';
+//ignore: unused_import
 import 'package:provider/provider.dart';
 
 final deg2rad = pi / 180.0;
@@ -19,83 +21,12 @@ class Wave extends StatefulWidget {
 }
 
 class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  List<Offset> _points = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-
-    _initPoints();
-
-    _controller.addListener(_newPoints);
-  }
-
-  void _newPoints() {
-    Random r = Random();
-    for (int i = 0; i < _points.length; i++) {
-      var point = _points[i];
-
-      double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
-      double newY = max(0.0, point.dy + diff);
-      newY = min(widget.size.height, newY);
-
-      Offset newPoint = Offset(point.dx, newY);
-      _points[i] = newPoint;
-    }
-  }
-
-  void _initPoints() {
-    Random r = Random();
-    for (int i = 0; i < widget.size.width; i++) {
-      double x = i.toDouble();
-      double y = r.nextDouble() * (widget.size.height * 0.8);
-
-      _points.add(Offset(x, y));
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlayStatus>(
-      builder: (context, player, child) {
-        if (player.isPlaying) {
-          _controller.repeat();
-        } else {
-          _controller.stop();
-        }
-
-        return child;
-      },
-      child: AnimatedBuilder(
-        animation: _controller,
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              height: widget.size.height,
-              width: widget.size.width,
-            ),
-            OpacityOverlay(height: widget.size.height),
-          ],
-        ),
-        builder: (BuildContext context, Widget child) {
-          return ClipPath(
-            clipper: WaveClipper(_controller.value, _points),
-            child: child,
-          );
-        },
-      ),
+    return Container(
+      color: Colors.blue,
+      height: widget.size.height,
+      width: widget.size.width,
     );
   }
 }
@@ -108,11 +39,13 @@ class WaveClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    // var path = _soundWave(size);
-    var path = _sineWave(size);
+    var path = _soundWave(size);
+    // var path = _sineWave(size);
+    // var path = _bezierWave(size);
     return path;
   }
 
+  //ignore: unused_element
   Path _soundWave(Size size) {
     var path = Path();
     path.addPolygon(wavePoints, false);
@@ -123,13 +56,17 @@ class WaveClipper extends CustomClipper<Path> {
     return path;
   }
 
+  //ignore: unused_element
   Path _sineWave(Size size) {
     List<Offset> sinePoints = [];
     final speed = 2;
+    final amplitude = size.height / 3;
+    final yOffset = size.height / 2;
+
+    final period = speed * value * 2 * pi;
 
     for (int i = 0; i < size.width; i++) {
-      double y = (size.height / 3) * sin(0.075 * i - (speed * value * 2 * pi)) +
-          (size.height / 2);
+      double y = amplitude * sin(0.075 * i - period) + yOffset;
 
       Offset newPoint = Offset(i.toDouble(), y);
       sinePoints.add(newPoint);
@@ -143,6 +80,7 @@ class WaveClipper extends CustomClipper<Path> {
     return path;
   }
 
+  //ignore: unused_element
   Path _bezierWave(Size size) {
     /*
     Adapted from 
