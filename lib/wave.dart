@@ -22,23 +22,40 @@ class Wave extends StatefulWidget {
 
 class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
   List<Offset> _points = [];
+  AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      height: widget.size.height,
-      width: widget.size.width,
+    return Consumer<PlayStatus>(
+      builder: (context, player, child) {
+        if (player.isPlaying) {
+          _controller.repeat();
+        } else {
+          _controller.stop();
+        }
+
+        return child;
+      },
+      child: Container(
+        color: Colors.blue,
+        height: widget.size.height,
+        width: widget.size.width,
+      ),
     );
   }
 }
@@ -51,8 +68,8 @@ class WaveClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    var path = _soundWave(size);
-    // var path = _sineWave(size);
+    // var path = _soundWave(size);
+    var path = _sineWave(size);
     // var path = _bezierWave(size);
     return path;
   }
