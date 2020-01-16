@@ -3,12 +3,18 @@
 		"scope": "dart",
 		"prefix": "newPoints",
 		"body": [
+			"/// Modifies each point randomly by a maximum of +/- [maxDiff] pixels",
 			"void _newPoints() {",
+			"  // The maximum number of pixels that points on a random wave can change by.",
+			"  final maxDiff = 3.0;",
 			"  Random r = Random();",
 			"  for (int i = 0; i < _points.length; i++) {",
 			"    var point = _points[i];",
 			"",
+			"    // Generate a random number between  -maxDiff and +maxDiff",
 			"    double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;",
+			"",
+			"    // Ensure that point is constrained between 0 and the size of the container",
 			"    double newY = max(0.0, point.dy + diff);",
 			"    newY = min(widget.size.height, newY);",
 			"",
@@ -23,15 +29,28 @@
 		"scope": "dart",
 		"prefix": "initPoints",
 		"body": [
+			"/// Generates a randoms starting configuration for a 'sound wave' pattern.",
 			"void _initPoints() {",
 			"  Random r = Random();",
 			"  for (int i = 0; i < widget.size.width; i++) {",
 			"    double x = i.toDouble();",
+			"",
+			"    // Set this point's y-coordinate to a random value",
+			"    // no greater than 80% of the container's height",
 			"    double y = r.nextDouble() * (widget.size.height * 0.8);",
 			"",
 			"    _points.add(Offset(x, y));",
 			"  }",
 			"}"
+		],
+		"description": "Function for generating the initial set of points for clippath animation"
+	},
+	"Add points and modify points": {
+		"scope": "dart",
+		"prefix": "controllerPoints",
+		"body": [
+			"_controller.addListener(_newPoints);",
+			"_initPoints();",
 		],
 		"description": "Function for generating the initial set of points for clippath animation"
 	},
