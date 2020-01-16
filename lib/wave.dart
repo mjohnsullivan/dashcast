@@ -50,11 +50,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
 
           return child;
         },
-        child: Container(
-          color: Colors.transparent,
-          height: widget.size.height,
-          width: widget.size.width,
-        ));
+        child: Container(color: Colors.transparent));
   }
 
   void _initPoints() {
@@ -83,23 +79,16 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
 }
 
 class WaveClipper extends CustomClipper<Path> {
-  double value;
-  List<Offset> wavePoints;
+  double _value;
+  List<Offset> _wavePoints;
 
-  WaveClipper(this.value, this.wavePoints);
+  WaveClipper(this._value, this._wavePoints);
 
   @override
   Path getClip(Size size) {
-    var path = _soundWave(size);
-    // var path = _sineWave(size);
-    // var path = _bezierWave(size);
-    return path;
-  }
-
-  //ignore: unused_element
-  Path _soundWave(Size size) {
     var path = Path();
-    path.addPolygon(wavePoints, false);
+    // _makeSineWave();
+    path.addPolygon(_wavePoints, false);
 
     path.lineTo(size.width, size.height);
     path.lineTo(0.0, size.height);
@@ -108,27 +97,20 @@ class WaveClipper extends CustomClipper<Path> {
   }
 
   //ignore: unused_element
-  Path _sineWave(Size size) {
-    List<Offset> sinePoints = [];
+  void _sineWave(Size size) {
+    // TODO: simplify sine code
     final speed = 2;
     final amplitude = size.height / 3;
     final yOffset = size.height / 2;
 
-    final period = speed * value * 2 * pi;
+    final period = speed * _value * 2 * pi;
 
     for (int i = 0; i < size.width; i++) {
       double y = amplitude * sin(0.075 * i - period) + yOffset;
 
       Offset newPoint = Offset(i.toDouble(), y);
-      sinePoints.add(newPoint);
+      _wavePoints[i] = newPoint;
     }
-
-    var path = Path();
-    path.addPolygon(sinePoints, false);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
-    return path;
   }
 
   //ignore: unused_element
@@ -138,7 +120,7 @@ class WaveClipper extends CustomClipper<Path> {
     https://github.com/felixblaschke/simple_animations_example_app/blob/master/lib/examples/fancy_background.dart
     */
 
-    final v = value * pi * 2;
+    final v = _value * pi * 2;
     final path = Path();
 
     final y1 = sin(v);
