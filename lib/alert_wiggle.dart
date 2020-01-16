@@ -11,6 +11,7 @@ class AlertWiggle extends StatelessWidget {
 
   final Widget child;
   static final sinePeriod = 2 * pi;
+  double _endValue = 0;
 
   @override
   Widget build(BuildContext context) {

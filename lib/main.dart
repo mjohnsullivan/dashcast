@@ -51,14 +51,40 @@ class DownloadControl extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: <Widget>[
-        //TODO(live): Add leading image
+        LeadingImage(),
         DownloadButton(),
       ],
     );
   }
 }
 
+class LeadingImage extends StatelessWidget {
+  final _defaultOpacity = 0.15;
 
+  @override
+  Widget build(BuildContext context) {
+    final podcast = Provider.of<Podcast>(context);
+    final episode = Provider.of<Episode>(context);
+    return Consumer<Episode>(
+      builder: (BuildContext context, Episode value, Widget child) {
+        return AnimatedOpacity(
+          child: child,
+          opacity: _getOpacity(value.percentDownloaded),
+          duration: Duration(milliseconds: 100),
+        );
+      },
+      child: Hero(
+        child: ClipOval(
+          child: Image.network(podcast.feed.image.url),
+        ),
+        tag: episode.item.title,
+      ),
+    );
+  }
+
+  double _getOpacity(double percentDownloaded) =>
+      percentDownloaded * (1 - _defaultOpacity) + _defaultOpacity;
+}
 
 /*
 

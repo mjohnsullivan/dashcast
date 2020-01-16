@@ -6,9 +6,6 @@ import 'package:dashcast/notifiers.dart';
 //ignore: unused_import
 import 'package:provider/provider.dart';
 
-final deg2rad = pi / 180.0;
-final frequency = 4.0;
-final amplitude = 10.0;
 final maxDiff = 3.0;
 
 class Wave extends StatefulWidget {
@@ -31,6 +28,8 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       duration: const Duration(seconds: 2),
       vsync: this,
     );
+    _controller.addListener(_newPoints);
+    _initPoints();
   }
 
   @override
@@ -42,21 +41,44 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Consumer<PlayStatus>(
-      builder: (context, player, child) {
-        if (player.isPlaying) {
-          _controller.repeat();
-        } else {
-          _controller.stop();
-        }
+        builder: (context, player, child) {
+          if (player.isPlaying) {
+            _controller.repeat();
+          } else {
+            _controller.stop();
+          }
 
-        return child;
-      },
-      child: Container(
-        color: Colors.blue,
-        height: widget.size.height,
-        width: widget.size.width,
-      ),
-    );
+          return child;
+        },
+        child: Container(
+          color: Colors.transparent,
+          height: widget.size.height,
+          width: widget.size.width,
+        ));
+  }
+
+  void _initPoints() {
+    Random r = Random();
+    for (int i = 0; i < widget.size.width; i++) {
+      double x = i.toDouble();
+      double y = r.nextDouble() * (widget.size.height * 0.8);
+
+      _points.add(Offset(x, y));
+    }
+  }
+
+  void _newPoints() {
+    Random r = Random();
+    for (int i = 0; i < _points.length; i++) {
+      var point = _points[i];
+
+      double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
+      double newY = max(0.0, point.dy + diff);
+      newY = min(widget.size.height, newY);
+
+      Offset newPoint = Offset(point.dx, newY);
+      _points[i] = newPoint;
+    }
   }
 }
 
@@ -68,8 +90,8 @@ class WaveClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    // var path = _soundWave(size);
-    var path = _sineWave(size);
+    var path = _soundWave(size);
+    // var path = _sineWave(size);
     // var path = _bezierWave(size);
     return path;
   }

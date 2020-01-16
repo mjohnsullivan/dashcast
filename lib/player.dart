@@ -20,7 +20,10 @@ class EpisodeImage extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       children: <Widget>[
         Hero(child: Image.network(url), tag: title),
-        // TODO(live): Do the Wave!
+        AnimatedOpacity(
+            opacity: Provider.of<PlayStatus>(context).isPlaying ? 1.0 : 0.0,
+            duration: Duration(seconds: 1),
+            child: Wave(size: Size(MediaQuery.of(context).size.width, 50))),
       ],
     );
   }
