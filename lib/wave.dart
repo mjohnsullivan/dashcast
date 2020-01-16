@@ -50,7 +50,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
 
           return child;
         },
-        child: Container(color: Colors.transparent));
+        child: Container());
   }
 
   void _initPoints() {
