@@ -1,12 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-//ignore: unused_import
 import 'package:dashcast/notifiers.dart';
-//ignore: unused_import
 import 'package:provider/provider.dart';
-
-final maxDiff = 3.0;
 
 class Wave extends StatefulWidget {
   final Size size;
@@ -18,6 +14,9 @@ class Wave extends StatefulWidget {
 }
 
 class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
+  // The maximum number of pixels that points on a random wave can change by.
+  final maxDiff = 3.0;
+
   List<Offset> _points = [];
   AnimationController _controller;
 
@@ -27,6 +26,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
+      upperBound: 2 * pi,
     );
     _controller.addListener(_newPoints);
     _initPoints();
@@ -87,7 +87,7 @@ class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    // _makeSineWave();
+    _makeSineWave(size);
     path.addPolygon(_wavePoints, false);
 
     path.lineTo(size.width, size.height);
@@ -97,16 +97,12 @@ class WaveClipper extends CustomClipper<Path> {
   }
 
   //ignore: unused_element
-  void _sineWave(Size size) {
-    // TODO: simplify sine code
-    final speed = 2;
+  void _makeSineWave(Size size) {
     final amplitude = size.height / 3;
-    final yOffset = size.height / 2;
-
-    final period = speed * _value * 2 * pi;
+    final yOffset = amplitude;
 
     for (int i = 0; i < size.width; i++) {
-      double y = amplitude * sin(0.075 * i - period) + yOffset;
+      double y = amplitude * sin((1 / 8) * i - _value) + yOffset;
 
       Offset newPoint = Offset(i.toDouble(), y);
       _wavePoints[i] = newPoint;
