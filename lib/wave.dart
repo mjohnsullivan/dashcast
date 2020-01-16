@@ -101,11 +101,11 @@ class WaveClipper extends CustomClipper<Path> {
     final amplitude = size.height / 3;
     final yOffset = amplitude;
 
-    for (int i = 0; i < size.width; i++) {
-      double y = amplitude * sin((1 / 8) * i - _value) + yOffset;
+    for (int x = 0; x < size.width; x++) {
+      double y = amplitude * sin((1 / 8) * x - _value) + yOffset;
 
-      Offset newPoint = Offset(i.toDouble(), y);
-      _wavePoints[i] = newPoint;
+      Offset newPoint = Offset(x.toDouble(), y);
+      _wavePoints[x] = newPoint;
     }
   }
 
