@@ -14,8 +14,6 @@ class Wave extends StatefulWidget {
 }
 
 class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
-  
-
   List<Offset> _points = [];
   AnimationController _controller;
 
@@ -27,7 +25,6 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       vsync: this,
       upperBound: 2 * pi,
     );
-    
   }
 
   @override
@@ -45,7 +42,6 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
           } else {
             _controller.stop();
           }
-
           return child;
         },
         child: Container());
