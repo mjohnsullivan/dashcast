@@ -145,9 +145,12 @@ class WaveClipper extends CustomClipper<Path> {
 }
 
 class OpacityOverlay extends StatelessWidget {
+  final overlayHeight = 50.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: overlayHeight,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: FractionalOffset.topCenter,
