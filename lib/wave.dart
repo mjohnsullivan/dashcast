@@ -30,6 +30,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       vsync: this,
     );
 
+    // Generate random start config.
     Random r = Random();
     for (int i = 0; i < widget.size.width; i++) {
       double x = i.toDouble();
@@ -75,12 +76,8 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
         animation: _controller,
         child: Stack(
           children: <Widget>[
-            Container(
-              color: Colors.transparent,
-              height: widget.size.height,
-              width: widget.size.width,
-            ),
-            OpacityOverlay(height: widget.size.height),
+            Container(color: Colors.transparent),
+            OpacityOverlay(),
           ],
         ),
         builder: (BuildContext context, Widget child) {
@@ -117,14 +114,9 @@ class WaveClipper extends CustomClipper<Path> {
 }
 
 class OpacityOverlay extends StatelessWidget {
-  final double height;
-
-  const OpacityOverlay({Key key, @required this.height}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: FractionalOffset.topCenter,
