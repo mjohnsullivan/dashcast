@@ -74,12 +74,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       },
       child: AnimatedBuilder(
         animation: _controller,
-        child: Stack(
-          children: <Widget>[
-            Container(color: Colors.transparent),
-            OpacityOverlay(),
-          ],
-        ),
+        child: OpacityOverlay(),
         builder: (BuildContext context, Widget child) {
           return ClipPath(
             clipper: WaveClipper(_controller.value, _points),
