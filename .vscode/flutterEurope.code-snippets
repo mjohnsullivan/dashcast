@@ -106,13 +106,11 @@
 		"scope": "dart",
 		"prefix": "wiggleTransform",
 		"body": [
-			"Widget _transform({@required Widget child, @required double value}) {",
 			"  double offset = sin(value);",
 			"  return Transform.translate(",
 			"    offset: Offset(offset, offset * 2),",
 			"    child: child,",
 			"  );",
-			"}"
 		],
 		"description": "Transform helper function for a wiggle."
 	},
