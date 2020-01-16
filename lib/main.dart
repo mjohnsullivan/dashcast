@@ -73,11 +73,8 @@ class LeadingImage extends StatelessWidget {
           duration: Duration(milliseconds: 100),
         );
       },
-      child: Hero(
-        child: ClipOval(
-          child: Image.network(podcast.feed.image.url),
-        ),
-        tag: episode.item.title,
+      child: ClipOval(
+        child: Image.network(podcast.feed.image.url),
       ),
     );
   }
