@@ -1,12 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-//ignore: unused_import
 import 'package:dashcast/notifiers.dart';
-//ignore: unused_import
 import 'package:provider/provider.dart';
-
-final maxDiff = 3.0;
 
 class Wave extends StatefulWidget {
   final Size size;
@@ -18,7 +14,7 @@ class Wave extends StatefulWidget {
 }
 
 class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
-  List<Offset> _points = [];
+  List<Offset> _points;
   AnimationController _controller;
 
   @override
@@ -27,8 +23,8 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
     _controller = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
+      upperBound: 2 * pi,
     );
-    _controller.addListener(_newPoints);
     _initPoints();
   }
 
@@ -41,40 +37,21 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Consumer<PlayStatus>(
-        builder: (context, player, child) {
-          if (player.isPlaying) {
-            _controller.repeat();
-          } else {
-            _controller.stop();
-          }
-
-          return child;
-        },
-        child: Container());
+      builder: (context, player, child) {
+        if (player.isPlaying) {
+          _controller.repeat();
+        } else {
+          _controller.stop();
+        }
+        return child;
+      },
+      child: Container(),
+    );
   }
 
+  /// Generates a random starting configuration for a 'sound wave' pattern.
   void _initPoints() {
-    Random r = Random();
-    for (int i = 0; i < widget.size.width; i++) {
-      double x = i.toDouble();
-      double y = r.nextDouble() * (widget.size.height * 0.8);
-
-      _points.add(Offset(x, y));
-    }
-  }
-
-  void _newPoints() {
-    Random r = Random();
-    for (int i = 0; i < _points.length; i++) {
-      var point = _points[i];
-
-      double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
-      double newY = max(0.0, point.dy + diff);
-      newY = min(widget.size.height, newY);
-
-      Offset newPoint = Offset(point.dx, newY);
-      _points[i] = newPoint;
-    }
+    _points = List.filled(widget.size.width.toInt() + 1, Offset(0, 0));
   }
 }
 
@@ -87,7 +64,7 @@ class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    // _makeSineWave();
+    _makeSineWave(size);
     path.addPolygon(_wavePoints, false);
 
     path.lineTo(size.width, size.height);
@@ -97,19 +74,15 @@ class WaveClipper extends CustomClipper<Path> {
   }
 
   //ignore: unused_element
-  void _sineWave(Size size) {
-    // TODO: simplify sine code
-    final speed = 2;
+  void _makeSineWave(Size size) {
     final amplitude = size.height / 3;
-    final yOffset = size.height / 2;
+    final yOffset = amplitude;
 
-    final period = speed * _value * 2 * pi;
+    for (int x = 0; x < size.width; x++) {
+      double y = sin(x);
 
-    for (int i = 0; i < size.width; i++) {
-      double y = amplitude * sin(0.075 * i - period) + yOffset;
-
-      Offset newPoint = Offset(i.toDouble(), y);
-      _wavePoints[i] = newPoint;
+      Offset newPoint = Offset(x.toDouble(), y);
+      _wavePoints[x] = newPoint;
     }
   }
 
@@ -144,7 +117,7 @@ class WaveClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }
 
-class OpacityOverlay extends StatelessWidget {
+class BlueGradient extends StatelessWidget {
   final overlayHeight = 50.0;
 
   @override

@@ -29,22 +29,45 @@ class EpisodeImage extends StatelessWidget {
   }
 }
 
-class PlayPauseIcon extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final playStatus = Provider.of<PlayStatus>(context);
-
-    return Icon(playStatus.isPlaying ? Icons.pause : Icons.play_arrow);
-  }
-}
-
-class PlaybackButtons extends StatefulWidget {
-  @override
-  _PlaybackButtonState createState() => _PlaybackButtonState();
-}
-
 class _PlaybackButtonState extends State<PlaybackButtons>
     with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    final episode = Provider.of<Podcast>(context).selectedEpisode;
+    final item = episode.item;
+    final downloadLocation = episode.downloadLocation;
+    final playStatus = Provider.of<PlayStatus>(context);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ProgressSlider(position: _playPosition),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RewindButton(),
+            IconButton(
+              icon: AnimatedIcon(
+                progress: _animationController,
+                icon: AnimatedIcons.play_pause,
+              ),
+              onPressed: () {
+                if (playStatus.isPlaying) {
+                  _animationController.reverse();
+                  _stop();
+                } else {
+                  _animationController.forward();
+                  _play(downloadLocation ?? item.guid);
+                }
+              },
+            ),
+            FastForward(),
+          ],
+        ),
+      ],
+    );
+  }
+
   sound.FlutterSound _sound;
   double _playPosition;
   StreamSubscription<sound.PlayStatus> _playerSubscription;
@@ -91,43 +114,20 @@ class _PlaybackButtonState extends State<PlaybackButtons>
       }
     });
   }
+}
 
+class PlayPauseIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final episode = Provider.of<Podcast>(context).selectedEpisode;
-    final item = episode.item;
-    final downloadLocation = episode.downloadLocation;
     final playStatus = Provider.of<PlayStatus>(context);
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ProgressSlider(position: _playPosition),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RewindButton(),
-            IconButton(
-              icon: AnimatedIcon(
-                progress: _animationController,
-                icon: AnimatedIcons.play_pause,
-              ),
-              onPressed: () {
-                if (playStatus.isPlaying) {
-                  _animationController.reverse();
-                  _stop();
-                } else {
-                  _animationController.forward();
-                  _play(downloadLocation ?? item.guid);
-                }
-              },
-            ),
-            FastForward(),
-          ],
-        ),
-      ],
-    );
+    return Icon(playStatus.isPlaying ? Icons.pause : Icons.play_arrow);
   }
+}
+
+class PlaybackButtons extends StatefulWidget {
+  @override
+  _PlaybackButtonState createState() => _PlaybackButtonState();
 }
 
 class PlayerPage extends StatelessWidget {
