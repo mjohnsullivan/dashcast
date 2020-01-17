@@ -26,7 +26,7 @@ class Podcast with ChangeNotifier {
   // Hacked version for emergency offline capabilities.
   bool offline = false;
 
-  Podcast({this.offline});
+  Podcast({this.offline = false});
 
   RssFeed get feed => _feed;
   void parse(String url) async {
