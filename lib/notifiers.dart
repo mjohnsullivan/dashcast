@@ -5,6 +5,7 @@ import 'package:webfeed/webfeed.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:flutter/services.dart' show rootBundle;
 
 class PlayStatus with ChangeNotifier {
   bool _isPlaying = false;
@@ -19,9 +20,20 @@ class PlayStatus with ChangeNotifier {
 class Podcast with ChangeNotifier {
   RssFeed _feed;
   Episode _selectedEpisode;
+  // Hacked version for emergency offline capabilities.
+  bool offline = false;
+
+  Podcast({this.offline});
 
   RssFeed get feed => _feed;
   void parse(String url) async {
+    if (offline) {
+      final res = await rootBundle.loadString('assets/feed.xml');
+      _feed = RssFeed.parse(res);
+      notifyListeners();
+      return;
+    }
+
     final res = await http.get(url);
     final xmlStr = res.body;
     _feed = RssFeed.parse(xmlStr);
@@ -83,5 +95,23 @@ class Episode with ChangeNotifier {
     final absolutePath = path.join(prefix, filename);
     print(absolutePath);
     return absolutePath;
+  }
+}
+
+class OfflinePodcast extends Podcast {
+  RssFeed _feed;
+  Episode _selectedEpisode;
+
+  RssFeed get feed => _feed;
+  void parse(String url) async {
+    final res = await rootBundle.loadString('assets/feed.rss');
+    _feed = RssFeed.parse(res);
+    notifyListeners();
+  }
+
+  Episode get selectedEpisode => _selectedEpisode;
+  set selectedEpisode(Episode value) {
+    _selectedEpisode = value;
+    notifyListeners();
   }
 }

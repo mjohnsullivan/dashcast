@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:rawvoice="http://www.rawvoice.com/rawvoiceRssModule/" version="2.0">
+    <channel>
+                                    <id>https://itsallwidgets.com/podcast/feed</id>
+                                                <link href="https://itsallwidgets.com/podcast"></link>
+                                                <title>It&#039;s All Widgets! Flutter Podcast</title>
+                                                <updated>2020-01-06T09:24:04+00:00</updated>
+                            <image>
+            <url>https://itsallwidgets.com/images/podcast.jpg</url>
+            <title>It's All Widgets! Flutter Podcast</title>
+            <link>https://itsallwidgets.com/podcast</link>
+        </image>
+        <description>
+            An ongoing series featuring some of the amazing developers from the Flutter community. In each episode we discuss the developer's background, what got them into Flutter and their thoughts on the platform in general.
+        </description>
+        <language>en-us</language>
+        <atom:link href="https://itsallwidgets.com/podcast/feed" rel="self" type="application/rss+xml"/>
+        <itunes:author>Hillel Coren</itunes:author>
+        <itunes:summary>
+            An ongoing series featuring some of the amazing developers from the Flutter community. In each episode we discuss the developer's background, what got them into Flutter and their thoughts on the platform in general.
+        </itunes:summary>
+        <itunes:subtitle>An open podcast for Flutter developers</itunes:subtitle>
+        <itunes:owner>
+            <itunes:name>Hillel Coren</itunes:name>
+            <itunes:email>hillelcoren@gmail.com</itunes:email>
+        </itunes:owner>
+        <itunes:explicit>No</itunes:explicit>
+        <itunes:keywords>
+            flutter,google,programming,development,web,mobile,developer,software engineering,app
+        </itunes:keywords>
+        <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+        <itunes:category text="Technology"/>
+        <itunes:category text="Education"/>
+                    <item>
+                <title>32. Maureen Josephine</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/32/maureen-josephine" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-32.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-32.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    A software developer interested in developing both mobile and web applications geared towards making work easier and creating a positive impact, currently working with Carepay Limited in Kenya. Developed interest in Flutter from 2018 to date and working towards improving the Flutter Tech community in Kisumu in collaboration with GDG Kisumu. I believe in Flutter and future of Flutter is great!!!
+
+# How to get started on fun Flutter
+https://medium.com/podiihq/how-to-get-started-on-fun-flutter-699c81c89a8f
+
+# Setting up Lint Rules in Dart-Flutter
+https://medium.com/podiihq/setting-up-lint-rules-in-dart-flutter-1ebbed0418a6
+
+# Understanding Hot-Reload in Flutter
+https://medium.com/podiihq/understanding-hot-reload-in-flutter-2dc28b317036
+
+# Welinda • A flutter app cultivated during IWD (International Women's Day) Hackathon organized by GDG Kisumu where we emerged the winners. The app aims to link Gender-based violence victims with rescue centers, hospitals, and doctors and provide chatroom for sharing experiences and testimonials.
+https://play.google.com/store/apps/details?id=com.podii.welinda_app
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/ekrr8m/maureen_josephine_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>A software developer interested in developing both mobile and web applications geared towards making work easier and creating a positive impact, currently working with Carepay Limited in Kenya. Developed interest in Flutter from 2018 to date and working towards improving the Flutter Tech community in Kisumu in collaboration with GDG Kisumu. I believe in Flutter and future of Flutter is great!!!
+
+# How to get started on fun Flutter
+https://medium.com/podiihq/how-to-get-started-on-fun-flutter-699c81c89a8f
+
+# Setting up Lint Rules in Dart-Flutter
+https://medium.com/podiihq/setting-up-lint-rules-in-dart-flutter-1ebbed0418a6
+
+# Understanding Hot-Reload in Flutter
+https://medium.com/podiihq/understanding-hot-reload-in-flutter-2dc28b317036
+
+# Welinda • A flutter app cultivated during IWD (International Women's Day) Hackathon organized by GDG Kisumu where we emerged the winners. The app aims to link Gender-based violence victims with rescue centers, hospitals, and doctors and provide chatroom for sharing experiences and testimonials.
+https://play.google.com/store/apps/details?id=com.podii.welinda_app
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/ekrr8m/maureen_josephine_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2020-01-06T09:24:04+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>9:50</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>31. Ciprian Turcu</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/31/ciprian-turcu" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-31.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-31.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Software Developer, administrator and associate of 
+@doxtitech
+
+# Coding with Chip - YouTube Channel
+https://youtube.com/c/Chipree 
+
+# Push-ups set counter - Play Store
+https://play.google.com/store/apps/details?id=com.doxtitech.push_ups_proximity_set_counter 
+
+# Count all - Play Store
+https://play.google.com/store/apps/details?id=com.doxti.count_all
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/eha9wz/ciprian_turcu_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>Software Developer, administrator and associate of 
+@doxtitech
+
+# Coding with Chip - YouTube Channel
+https://youtube.com/c/Chipree 
+
+# Push-ups set counter - Play Store
+https://play.google.com/store/apps/details?id=com.doxtitech.push_ups_proximity_set_counter 
+
+# Count all - Play Store
+https://play.google.com/store/apps/details?id=com.doxti.count_all
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/eha9wz/ciprian_turcu_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-12-29T19:34:15+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>22:15</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>30. Chris Sells</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/30/chris-sells" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-30.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-30.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Before joining Google, Chris was a contributing member of the Windows developer community for more than 20 years, including 3 years at Intel and 8 years at Microsoft. He’s written a number of books in this area and still maintains a blog that he started in 1995 about his various technical adventures, although he’s more active on Twitter these days. At Google, Chris is the Product Manager responsible for the Flutter developer experience.
+
+# Flutter Podcast - Chris Sells
+https://itsallwidgets.com/podcast/episodes/25/chris-sells
+
+# Announcing Flutter 1.12: What a year!
+https://medium.com/flutter/announcing-flutter-1-12-what-a-year-22c256ba525d
+
+# Flutter Favorite program
+https://flutter.dev/docs/development/packages-and-plugins/favorites
+
+# Announcing Dart 2.7: A safer, more expressive Dart
+https://medium.com/dartlang/dart-2-7-a3710ec54e97
+
+# DartPad
+https://dartpad.dartlang.org
+
+# Provider and Provide packages 
+https://github.com/google/flutter-provide/issues/3
+
+# Flutter Slidable 
+https://pub.dev/packages/flutter_slidable
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/echvy5/chris_sells_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>Before joining Google, Chris was a contributing member of the Windows developer community for more than 20 years, including 3 years at Intel and 8 years at Microsoft. He’s written a number of books in this area and still maintains a blog that he started in 1995 about his various technical adventures, although he’s more active on Twitter these days. At Google, Chris is the Product Manager responsible for the Flutter developer experience.
+
+# Flutter Podcast - Chris Sells
+https://itsallwidgets.com/podcast/episodes/25/chris-sells
+
+# Announcing Flutter 1.12: What a year!
+https://medium.com/flutter/announcing-flutter-1-12-what-a-year-22c256ba525d
+
+# Flutter Favorite program
+https://flutter.dev/docs/development/packages-and-plugins/favorites
+
+# Announcing Dart 2.7: A safer, more expressive Dart
+https://medium.com/dartlang/dart-2-7-a3710ec54e97
+
+# DartPad
+https://dartpad.dartlang.org
+
+# Provider and Provide packages 
+https://github.com/google/flutter-provide/issues/3
+
+# Flutter Slidable 
+https://pub.dev/packages/flutter_slidable
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/echvy5/chris_sells_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-12-18T20:12:29+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>38:01</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>29. Eric Windmill</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/29/eric-windmill" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-29.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-29.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Eric Windmill is a professional Dart developer, a contributor to open-source Flutter projects, and the author of FlutterByExample.com. His work is featured on Flutter's own showcase page.
+
+# Flutter in Action • Eric Windmill
+https://manning.com/books/flutter-in-action
+
+# Flutter by Example • Eric Windmill
+https://flutterbyexample.com
+
+# How Flutter renders Widgets • Matt Sullivan &amp; Andrew Fitz Gibbon
+https://youtube.com/watch?v=996ZgFRENMs
+
+# When to Use Keys - Flutter Widgets 101 • Emily Fortuna
+https://youtube.com/watch?v=kn0EOS-ZiIc
+
+# Flutter Samples • Brian Egan
+http://fluttersamples.com
+
+# Dart by Example • John Ryan
+http://jpryan.me/dartbyexample
+
+# The Rust Programming Language
+https://doc.rust-lang.org/1.26.0/book/second-edition
+
+# Learn to Program • Chris Pine 
+https://pine.fm/LearnToProgram
+
+# Reddit comment regarding Flutter Web • Ian Hickson
+https://reddit.com/r/FlutterDev/comments/dx3h9e
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/e4d984/eric_windmill_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>Eric Windmill is a professional Dart developer, a contributor to open-source Flutter projects, and the author of FlutterByExample.com. His work is featured on Flutter's own showcase page.
+
+# Flutter in Action • Eric Windmill
+https://manning.com/books/flutter-in-action
+
+# Flutter by Example • Eric Windmill
+https://flutterbyexample.com
+
+# How Flutter renders Widgets • Matt Sullivan &amp; Andrew Fitz Gibbon
+https://youtube.com/watch?v=996ZgFRENMs
+
+# When to Use Keys - Flutter Widgets 101 • Emily Fortuna
+https://youtube.com/watch?v=kn0EOS-ZiIc
+
+# Flutter Samples • Brian Egan
+http://fluttersamples.com
+
+# Dart by Example • John Ryan
+http://jpryan.me/dartbyexample
+
+# The Rust Programming Language
+https://doc.rust-lang.org/1.26.0/book/second-edition
+
+# Learn to Program • Chris Pine 
+https://pine.fm/LearnToProgram
+
+# Reddit comment regarding Flutter Web • Ian Hickson
+https://reddit.com/r/FlutterDev/comments/dx3h9e
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/e4d984/eric_windmill_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-12-01T07:32:43+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>22:23</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>28. Martin Aguinis &amp; Chris Sells</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/28/martin-aguinis-chris-sells" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-28.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-28.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Martin Aguinis leads Marketing for Flutter. He is part of the Google Developer Marketing group based in Mountain View, California. Before Flutter, Martin founded his own companies and also worked in the YouTube team on Virtual Reality. Martin is originally from Buenos Aires and loves to travel.
+
+# Flutter Create
+https://flutter.dev/create
+
+# Podcast Episode
+https://itsallwidgets.com/podcast/episodes/12/martin-aguinis
+
+# Flutter for web samples
+https://flutter.github.io/samples/
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/btji7x/martin_aguinis_chris_sells_its_all_widgets/
+                </description>
+                <itunes:summary>Martin Aguinis leads Marketing for Flutter. He is part of the Google Developer Marketing group based in Mountain View, California. Before Flutter, Martin founded his own companies and also worked in the YouTube team on Virtual Reality. Martin is originally from Buenos Aires and loves to travel.
+
+# Flutter Create
+https://flutter.dev/create
+
+# Podcast Episode
+https://itsallwidgets.com/podcast/episodes/12/martin-aguinis
+
+# Flutter for web samples
+https://flutter.github.io/samples/
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/btji7x/martin_aguinis_chris_sells_its_all_widgets/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-05-27T08:24:38+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>26:55</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>27. Kevin Moore</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/27/kevin-moore" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-27.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-27.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Product Manager for @dart_lang and @FlutterDev web tech.
+
+# Flutter for web
+http://flutter.dev/web
+
+# Dart: Productive, Fast, Multi-Platform - Pick 3
+https://www.youtube.com/watch?v=J5DQRPRBiFI
+
+# Bringing Flutter to the Web
+https://medium.com/flutter-io/bringing-flutter-to-the-web-904de05f0df0
+
+# Flutter for web samples
+https://flutter.github.io/samples/
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/bs0pen/kevin_moore_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>Product Manager for @dart_lang and @FlutterDev web tech.
+
+# Flutter for web
+http://flutter.dev/web
+
+# Dart: Productive, Fast, Multi-Platform - Pick 3
+https://www.youtube.com/watch?v=J5DQRPRBiFI
+
+# Bringing Flutter to the Web
+https://medium.com/flutter-io/bringing-flutter-to-the-web-904de05f0df0
+
+# Flutter for web samples
+https://flutter.github.io/samples/
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/bs0pen/kevin_moore_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-05-23T09:15:45+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>44:06</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>26. Ian Hickson &amp; Chris Sells</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/26/ian-hickson-chris-sells" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-26.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-26.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Ian &quot;Hixie&quot; Hickson is the author and maintainer of the Acid2 and Acid3 tests, the WHATWG HTML 5 specification, and the Pingback specification, and the early working draft of Web Applications 1.0. He is known as a proponent of Web standards, and has played a crucial role in the development of specifications such as CSS. Hickson was a co-editor of the CSS 2.1 specification and is one of the original co-creators of Flutter.
+
+# Chris Sells podcast
+https://itsallwidgets.com/podcast/episodes/25/chris-sells 
+
+# The Mahogany Staircase - Flutter's Layered Design
+https://www.youtube.com/watch?v=dkyY9WCGMi0
+
+# Provider - A generic implementation of InheritedWidget
+https://pub.dartlang.org/packages/provider
+
+# Breaking changes that would improve the overall API
+https://github.com/flutter/flutter/issues/24722
+
+# Flutter’s Code of conduct
+https://github.com/flutter/flutter/blob/master/CODE_OF_CONDUCT.md
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/bqyunu/ian_hickson_chris_sells_its_all_widgets_flutter/
+                </description>
+                <itunes:summary>Ian &quot;Hixie&quot; Hickson is the author and maintainer of the Acid2 and Acid3 tests, the WHATWG HTML 5 specification, and the Pingback specification, and the early working draft of Web Applications 1.0. He is known as a proponent of Web standards, and has played a crucial role in the development of specifications such as CSS. Hickson was a co-editor of the CSS 2.1 specification and is one of the original co-creators of Flutter.
+
+# Chris Sells podcast
+https://itsallwidgets.com/podcast/episodes/25/chris-sells 
+
+# The Mahogany Staircase - Flutter's Layered Design
+https://www.youtube.com/watch?v=dkyY9WCGMi0
+
+# Provider - A generic implementation of InheritedWidget
+https://pub.dartlang.org/packages/provider
+
+# Breaking changes that would improve the overall API
+https://github.com/flutter/flutter/issues/24722
+
+# Flutter’s Code of conduct
+https://github.com/flutter/flutter/blob/master/CODE_OF_CONDUCT.md
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/bqyunu/ian_hickson_chris_sells_its_all_widgets_flutter/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-05-20T17:52:39+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>52:23</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>25. Chris Sells</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/25/chris-sells" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-25.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-25.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Before joining Google, Chris was a contributing member of the Windows developer community for more than 20 years, including 3 years at Intel and 8 years at Microsoft. He’s written a number of books in this area and still maintains a blog that he started in 1995 about his various technical adventures, although he’s more active on Twitter these days. At Google, Chris is the Product Manager responsible for the Flutter developer experience.
+
+# Dart DevTools
+https://github.com/flutter/devtools/tree/master/packages/devtools
+
+# LinkedIn
+http://www.linkedin.com/in/csells
+
+# Amazon
+http://amazon.com/Chris-Sells/e/B001H6OL1K
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/b0nt9d/chris_sells_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>Before joining Google, Chris was a contributing member of the Windows developer community for more than 20 years, including 3 years at Intel and 8 years at Microsoft. He’s written a number of books in this area and still maintains a blog that he started in 1995 about his various technical adventures, although he’s more active on Twitter these days. At Google, Chris is the Product Manager responsible for the Flutter developer experience.
+
+# Dart DevTools
+https://github.com/flutter/devtools/tree/master/packages/devtools
+
+# LinkedIn
+http://www.linkedin.com/in/csells
+
+# Amazon
+http://amazon.com/Chris-Sells/e/B001H6OL1K
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/b0nt9d/chris_sells_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-03-13T16:11:45+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>26:21</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>23. Emily Fortuna</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/23/emily-fortuna" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-23.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-23.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Emily Fortuna is a developer advocate on the Flutter team at Google. When not educating people about the awesomeness of Flutter, she can be found working on improving fairness in machine learning or acting on the stage and screen. She is an avid member of the nerdy joke appreciation society. Please reach out to her if you're interested in presenting about Flutter and want a nudge!
+
+# The Dog House
+https://github.com/efortuna/thedoghouse
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/aq4qcl/emily_fortuna_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>Emily Fortuna is a developer advocate on the Flutter team at Google. When not educating people about the awesomeness of Flutter, she can be found working on improving fairness in machine learning or acting on the stage and screen. She is an avid member of the nerdy joke appreciation society. Please reach out to her if you're interested in presenting about Flutter and want a nudge!
+
+# The Dog House
+https://github.com/efortuna/thedoghouse
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/aq4qcl/emily_fortuna_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-02-13T09:04:38+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>10:24</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>22. Matt Sullivan</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/22/matt-sullivan" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-22.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-22.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Matt works for Google on the Flutter team and is a pretty lucky guy: he gets to spend his days rummaging around Flutter, building apps, and messing around making YouTube videos. Seriously, that's his job.
+
+# Widget of the Week Playlist
+https://www.youtube.com/watch?v=lkF0TQJO0bA&amp;list=PLOU2XLYxmsIL0pH0zWe_ZOHgGhZ7UasUE
+
+# Flutter Weekly 
+https://flutterweekly.net
+
+# Flutter Force
+https://medium.com/flutterforce
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/ap3apc/matt_sullivan_its_all_widgets_flutter_podcast/
+                </description>
+                <itunes:summary>Matt works for Google on the Flutter team and is a pretty lucky guy: he gets to spend his days rummaging around Flutter, building apps, and messing around making YouTube videos. Seriously, that's his job.
+
+# Widget of the Week Playlist
+https://www.youtube.com/watch?v=lkF0TQJO0bA&amp;list=PLOU2XLYxmsIL0pH0zWe_ZOHgGhZ7UasUE
+
+# Flutter Weekly 
+https://flutterweekly.net
+
+# Flutter Force
+https://medium.com/flutterforce
+
+Discussion: https://www.reddit.com/r/FlutterDev/comments/ap3apc/matt_sullivan_its_all_widgets_flutter_podcast/</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-02-10T11:55:35+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>24:56</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>21. Pavan Podila</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/21/pavan-podila" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-21.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-21.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Been a Frontend Engineer for 15+ years. Worked on a variety of Platforms, Frameworks ranging from Java, .Net, macOS, iOS, React, Angular, Web and of late Dart and Flutter :-). I am a published author, speaker and mentor. Created QuickLens, a macOS app for UI Designers and Developers.
+
+Recently, started mobx.dart, a port of MobX from the JavaScript world to dart and flutter. MobX is a supercharged state-management library that drastically simplifies the experience of dealing with the reactive-state of your application.
+
+# MobX.dart Github repo
+https://github.com/mobxjs/mobx.dart
+
+# Getting Started guide
+# Short and quick tutorial to get you up and running with MobX and Flutter
+https://mobx-dart.netlify.com/getting-started
+
+# MobX Quick Start Guide
+# Book about MobX, co-authored with Michel Weststrate
+# The concepts are fully applicable even though it targets JavaScript 
+https://www.packtpub.com/web-development/mobx-quick-start-guide
+                </description>
+                <itunes:summary>Been a Frontend Engineer for 15+ years. Worked on a variety of Platforms, Frameworks ranging from Java, .Net, macOS, iOS, React, Angular, Web and of late Dart and Flutter :-). I am a published author, speaker and mentor. Created QuickLens, a macOS app for UI Designers and Developers.
+
+Recently, started mobx.dart, a port of MobX from the JavaScript world to dart and flutter. MobX is a supercharged state-management library that drastically simplifies the experience of dealing with the reactive-state of your application.
+
+# MobX.dart Github repo
+https://github.com/mobxjs/mobx.dart
+
+# Getting Started guide
+# Short and quick tutorial to get you up and running with MobX and Flutter
+https://mobx-dart.netlify.com/getting-started
+
+# MobX Quick Start Guide
+# Book about MobX, co-authored with Michel Weststrate
+# The concepts are fully applicable even though it targets JavaScript 
+https://www.packtpub.com/web-development/mobx-quick-start-guide</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-02-06T03:29:53+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>14:17</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>20. Nilay Yener</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/20/nilay-yener" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-20.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-20.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Nilay works at Flutter DevRel team as a program manager, mostly working with communities and events. She likes talking to people. If you are interested in running a Flutter event, want to be a Flutter GDE or have questions, reach out to her on Twitter!
+
+
+                </description>
+                <itunes:summary>Nilay works at Flutter DevRel team as a program manager, mostly working with communities and events. She likes talking to people. If you are interested in running a Flutter event, want to be a Flutter GDE or have questions, reach out to her on Twitter!
+
+</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-02-03T11:31:01+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>9:54</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>18. Oluwatobi Akinpelu</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/18/oluwatobi-akinpelu" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-18.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-18.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    In everything I do, I believe in creativity and growing into excellence. The way I do this is by creating products and contents that are useful, beautiful and easy to use. I happen to create mobile apps! Currently an Android developer at Farmcrowdy Limited (No. 1 startup in Nigeria). I have 4 years experience developing Android apps, and I'm super excited to be part of the first people to launch an Android and iOS app using flutter in Nigeria.
+
+# Substack Newsletter Community
+https://creativityloop.substack.com
+
+# Gingered - Play Store
+https://play.google.com/store/apps/details?id=pro.androidmaven.gingered
+
+# Gingered - App Store
+https://itunes.apple.com/us/app/gingered/id1448641452#?platform=iphone
+
+# Mavenstickers
+https://play.google.com/store/apps/details?id=com.androidmavenpro.mavenstickers
+
+# Youtube channel
+https://www.youtube.com/channel/UCjie1cgfUB6ssZOtUYha6gw
+                </description>
+                <itunes:summary>In everything I do, I believe in creativity and growing into excellence. The way I do this is by creating products and contents that are useful, beautiful and easy to use. I happen to create mobile apps! Currently an Android developer at Farmcrowdy Limited (No. 1 startup in Nigeria). I have 4 years experience developing Android apps, and I'm super excited to be part of the first people to launch an Android and iOS app using flutter in Nigeria.
+
+# Substack Newsletter Community
+https://creativityloop.substack.com
+
+# Gingered - Play Store
+https://play.google.com/store/apps/details?id=pro.androidmaven.gingered
+
+# Gingered - App Store
+https://itunes.apple.com/us/app/gingered/id1448641452#?platform=iphone
+
+# Mavenstickers
+https://play.google.com/store/apps/details?id=com.androidmavenpro.mavenstickers
+
+# Youtube channel
+https://www.youtube.com/channel/UCjie1cgfUB6ssZOtUYha6gw</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-01-28T14:04:15+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>14:12</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>16. Simon Lightfoot</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/16/simon-lightfoot" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-16.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-16.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Simon loves Flutter and believes its the future of Mobile development. Co-founder Flutter Study Group on Slack. He's been writing code for 18+ years, of which the last 10 years has been professional Android development. He discovered Flutter in Oct 2017 and since then has not looked back.
+
+# Medium
+https://medium.com/flutter-community
+
+# rebloc
+https://github.com/redbrogdon/rebloc
+                </description>
+                <itunes:summary>Simon loves Flutter and believes its the future of Mobile development. Co-founder Flutter Study Group on Slack. He's been writing code for 18+ years, of which the last 10 years has been professional Android development. He discovered Flutter in Oct 2017 and since then has not looked back.
+
+# Medium
+https://medium.com/flutter-community
+
+# rebloc
+https://github.com/redbrogdon/rebloc</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-01-17T09:00:09+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>17:12</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>15. Remi Rousselet</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/15/remi-rousselet" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-15.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-15.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Deeply in love with Flutter, Remi spends a lot of time exchanging with the flutterverse. He particularly stands out with his presence on StackOverflow, with well over 500 answers to Flutter questions.
+
+# Stack Overflow
+https://stackoverflow.com/users/8394265/r%C3%A9mi-rousselet
+
+# flutter_hooks
+https://github.com/rrousselGit/flutter_hooks
+
+# functional_widget
+https://github.com/rrousselGit/functional_widget
+                </description>
+                <itunes:summary>Deeply in love with Flutter, Remi spends a lot of time exchanging with the flutterverse. He particularly stands out with his presence on StackOverflow, with well over 500 answers to Flutter questions.
+
+# Stack Overflow
+https://stackoverflow.com/users/8394265/r%C3%A9mi-rousselet
+
+# flutter_hooks
+https://github.com/rrousselGit/flutter_hooks
+
+# functional_widget
+https://github.com/rrousselGit/functional_widget</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-01-14T07:41:23+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>10:13</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>14. Scott Stoll</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/14/scott-stoll" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-14.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-14.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Scott is the organizer of GDG Cleveland &amp; NE Ohio Flutter Developers Meetup, co-founder of the Flutter Study Group Slack and an editor for Flutter Community on Medium. He is also the creator of “#HumpDayQandA” (A.K.A. “FlutterQandA”). He is fond of travel and available for talks, workshops and “Kickstart” training intended to get a team productive with Flutter in only a few days.
+
+# Learn Flutter
+https://learnflutter.io
+
+# Windy City DevFest
+https://windycity.devfest.io
+
+Note: Windy City DevFest is on February 1st, not the 3rd
+                </description>
+                <itunes:summary>Scott is the organizer of GDG Cleveland &amp; NE Ohio Flutter Developers Meetup, co-founder of the Flutter Study Group Slack and an editor for Flutter Community on Medium. He is also the creator of “#HumpDayQandA” (A.K.A. “FlutterQandA”). He is fond of travel and available for talks, workshops and “Kickstart” training intended to get a team productive with Flutter in only a few days.
+
+# Learn Flutter
+https://learnflutter.io
+
+# Windy City DevFest
+https://windycity.devfest.io
+
+Note: Windy City DevFest is on February 1st, not the 3rd</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-01-09T07:49:00+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>14:02</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>13. Norbert Kozsir</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/13/norbert-kozsir" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-13.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-13.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Student. Discovered Flutter in January 2018, been releasing a bunch of articles and open source packages since then. Currently involved in building a Flutter desktop embedder &amp; experimenting with the idea of a Flutter IDE.
+
+
+                </description>
+                <itunes:summary>Student. Discovered Flutter in January 2018, been releasing a bunch of articles and open source packages since then. Currently involved in building a Flutter desktop embedder &amp; experimenting with the idea of a Flutter IDE.
+
+</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-01-07T07:02:25+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>13:44</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>12. Martin Aguinis</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/12/martin-aguinis" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-12.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-12.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Martin Aguinis leads Marketing for Flutter. He is part of the Google Developer Marketing group based in Mountain View, California. Before Flutter, Martin founded his own companies and also worked in the YouTube team on Virtual Reality. Martin is originally from Buenos Aires and loves to travel.
+
+# Introducing Flutter 
+https://www.youtube.com/watch?v=fq4N0hgOWzU
+
+# Flutter Brand Guidelines
+https://flutter.io/brand
+
+# Official Assets
+https://drive.google.com/drive/folders/1KXNtO9My2AMpDOF9A9Y_4aj4_BcgmDDT
+                </description>
+                <itunes:summary>Martin Aguinis leads Marketing for Flutter. He is part of the Google Developer Marketing group based in Mountain View, California. Before Flutter, Martin founded his own companies and also worked in the YouTube team on Virtual Reality. Martin is originally from Buenos Aires and loves to travel.
+
+# Introducing Flutter 
+https://www.youtube.com/watch?v=fq4N0hgOWzU
+
+# Flutter Brand Guidelines
+https://flutter.io/brand
+
+# Official Assets
+https://drive.google.com/drive/folders/1KXNtO9My2AMpDOF9A9Y_4aj4_BcgmDDT</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2019-01-03T06:40:09+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>10:13</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>10. Jorge Coca</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/10/jorge-coca" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-10.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-10.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Spanish engineer lost in Chicago. I am the organizer of the Chicago Flutter Meetup. I work for the BMW Group, where we craft the Android apps for BMW, MINI and Rolls Royce. When I am not coding, you’ll likely find me playing guitar, and trying to sing at the same time, although we can all agree that singing is not one of my strengths!
+
+- https://www.meetup.com/Flutter-Chicago/
+- https://github.com/jorgecoca/ozzie.flutter
+- https://github.com/felangel/bloc
+- https://medium.com/flutter-community/ozzie-our-new-testing-friend-a581b34223fa
+- https://medium.com/flutter-community/let-me-help-you-to-understand-and-choose-a-state-management--solution-for-your-app-9ffeac834ee3
+- https://medium.com/flutter-community/part-1-code-generation-in-dart-the-basics-3127f4c842cc
+- https://medium.com/flutter-community/part-2-code-generation-in-dart-annotations-source-gen-and-build-runner-bbceee28697b
+                </description>
+                <itunes:summary>Spanish engineer lost in Chicago. I am the organizer of the Chicago Flutter Meetup. I work for the BMW Group, where we craft the Android apps for BMW, MINI and Rolls Royce. When I am not coding, you’ll likely find me playing guitar, and trying to sing at the same time, although we can all agree that singing is not one of my strengths!
+
+- https://www.meetup.com/Flutter-Chicago/
+- https://github.com/jorgecoca/ozzie.flutter
+- https://github.com/felangel/bloc
+- https://medium.com/flutter-community/ozzie-our-new-testing-friend-a581b34223fa
+- https://medium.com/flutter-community/let-me-help-you-to-understand-and-choose-a-state-management--solution-for-your-app-9ffeac834ee3
+- https://medium.com/flutter-community/part-1-code-generation-in-dart-the-basics-3127f4c842cc
+- https://medium.com/flutter-community/part-2-code-generation-in-dart-annotations-source-gen-and-build-runner-bbceee28697b</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2018-12-23T10:14:40+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>13:20</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>8. Bhavik Makwana</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/8/bhavik-makwana" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-8.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-8.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    I am a Google Certified Associate Android Developer, Having 1.5+ years of experience and now a Flutter enthusiast, I love creating projects and making it open source. Also, love to speak what I know about.
+
+
+                </description>
+                <itunes:summary>I am a Google Certified Associate Android Developer, Having 1.5+ years of experience and now a Flutter enthusiast, I love creating projects and making it open source. Also, love to speak what I know about.
+
+</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2018-12-16T15:00:11+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>7:39</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+                    <item>
+                <title>7. Luke Pighetti</title>
+                <link href="https://itsallwidgets.com/podcast/episodes/7/luke-pighetti" />
+                <enclosure url="https://itsallwidgets.com/podcast/download/episode-7.mp3" type="audio/mpeg"/>
+                <guid>https://itsallwidgets.com/podcast/download/episode-7.mp3</guid>
+                <author>
+                    <name>Hillel Coren</name>
+                </author>
+                <description>
+                    Hello! I am an accidental altcoin founder who became a software developer through trial by fire. I love Flutter, Typescript, ReactiveX, and Oxford commas.
+
+A showcase app for Flutter Developers:
+
+https://github.com/lukepighetti/flutter-developers
+                </description>
+                <itunes:summary>Hello! I am an accidental altcoin founder who became a software developer through trial by fire. I love Flutter, Typescript, ReactiveX, and Oxford commas.
+
+A showcase app for Flutter Developers:
+
+https://github.com/lukepighetti/flutter-developers</itunes:summary>
+                <itunes:image href="https://itsallwidgets.com/images/podcast.jpg"/>
+                <pubDate>2018-12-12T18:05:05+00:00</pubDate>
+                <itunes:explicit>No</itunes:explicit>
+                <itunes:duration>21:31</itunes:duration>
+                <itunes:keywords>
+                    flutter,google,programming,development,web,mobile,developer,software engineering,app
+                </itunes:keywords>
+            </item>
+            </channel>
+</rss>
