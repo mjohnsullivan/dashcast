@@ -125,7 +125,7 @@
 		"body": [
 			"  double offset = sin(value);",
 			"  return Transform.translate(",
-			"    offset: Offset(offset, offset * 2),",
+			"    offset: Offset(0, offset * 2),",
 			"    child: child,",
 			"  );",
 		],
