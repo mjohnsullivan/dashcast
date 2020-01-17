@@ -29,6 +29,7 @@
 		"scope": "dart",
 		"prefix": "initPoints",
 		"body": [
+			"  _points = [];",
 			"  Random r = Random();",
 			"  for (int i = 0; i < widget.size.width; i++) {",
 			"    double x = i.toDouble();",
