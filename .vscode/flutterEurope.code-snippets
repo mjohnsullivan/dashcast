@@ -29,8 +29,6 @@
 		"scope": "dart",
 		"prefix": "initPoints",
 		"body": [
-			"/// Generates a randoms starting configuration for a 'sound wave' pattern.",
-			"void _initPoints() {",
 			"  Random r = Random();",
 			"  for (int i = 0; i < widget.size.width; i++) {",
 			"    double x = i.toDouble();",
@@ -41,7 +39,6 @@
 			"",
 			"    _points.add(Offset(x, y));",
 			"  }",
-			"}"
 		],
 		"description": "Function for generating the initial set of points for clippath animation"
 	},

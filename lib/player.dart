@@ -31,7 +31,6 @@ class EpisodeImage extends StatelessWidget {
 
 class _PlaybackButtonState extends State<PlaybackButtons>
     with SingleTickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     final episode = Provider.of<Podcast>(context).selectedEpisode;
@@ -116,7 +115,6 @@ class _PlaybackButtonState extends State<PlaybackButtons>
     });
   }
 }
-
 
 class PlayPauseIcon extends StatelessWidget {
   @override

@@ -14,7 +14,7 @@ class Wave extends StatefulWidget {
 }
 
 class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
-  List<Offset> _points = [];
+  List<Offset> _points;
   AnimationController _controller;
 
   @override
@@ -25,6 +25,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       vsync: this,
       upperBound: 2 * pi,
     );
+    _initPoints();
   }
 
   @override
@@ -36,15 +37,21 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Consumer<PlayStatus>(
-        builder: (context, player, child) {
-          if (player.isPlaying) {
-            _controller.repeat();
-          } else {
-            _controller.stop();
-          }
-          return child;
-        },
-        child: Container());
+      builder: (context, player, child) {
+        if (player.isPlaying) {
+          _controller.repeat();
+        } else {
+          _controller.stop();
+        }
+        return child;
+      },
+      child: Container(),
+    );
+  }
+
+  /// Generates a random starting configuration for a 'sound wave' pattern.
+  void _initPoints() {
+    _points = List.filled(widget.size.width.toInt() + 1, Offset(0, 0));
   }
 }
 
@@ -72,7 +79,7 @@ class WaveClipper extends CustomClipper<Path> {
     final yOffset = amplitude;
 
     for (int x = 0; x < size.width; x++) {
-      double y = amplitude * sin((1 / 8) * x - _value) + yOffset;
+      double y = sin(x);
 
       Offset newPoint = Offset(x.toDouble(), y);
       _wavePoints[x] = newPoint;
