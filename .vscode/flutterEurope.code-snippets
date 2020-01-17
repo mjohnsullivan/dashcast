@@ -150,11 +150,10 @@
 		"body": [
 			"AnimatedBuilder(",
 			"  animation: _controller,",
-			"  child: OpacityOverlay(),",
 			"  builder: (BuildContext context, Widget child) {",
 			"    return ClipPath(",
 			"      clipper: WaveClipper(_controller.value, _points),",
-			"      child: child,",
+			"      child: BlueGradient(),",
 			"    );",
 			"  },",
 			"),",

@@ -117,7 +117,7 @@ class WaveClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }
 
-class OpacityOverlay extends StatelessWidget {
+class BlueGradient extends StatelessWidget {
   final overlayHeight = 50.0;
 
   @override
