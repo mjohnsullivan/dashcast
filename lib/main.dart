@@ -174,6 +174,7 @@ class DownloadButton extends StatelessWidget {
   }
 }
 
+/// This is part of the emergency offline-proofing for live-coding.
 class PodcastImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
