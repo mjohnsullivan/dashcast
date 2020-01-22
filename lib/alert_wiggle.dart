@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//ignore: unused_import
-import 'package:vector_math/vector_math_64.dart';
 import 'package:dashcast/notifiers.dart';
 
 class AlertWiggle extends StatelessWidget {
