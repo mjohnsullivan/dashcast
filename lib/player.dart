@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dashcast/main.dart';
 import 'package:dashcast/notifiers.dart';
 //ignore: unused_import
 import 'package:dashcast/wave.dart';
@@ -9,17 +10,16 @@ import 'package:flutter_sound/flutter_sound.dart' as sound;
 import 'package:provider/provider.dart';
 
 class EpisodeImage extends StatelessWidget {
-  final url;
   final title;
 
-  const EpisodeImage({Key key, this.url, this.title}) : super(key: key);
+  const EpisodeImage({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        Hero(child: Image.network(url), tag: title),
+        Hero(child: PodcastImage(), tag: title),
         AnimatedOpacity(
             opacity: Provider.of<PlayStatus>(context).isPlaying ? 1.0 : 0.0,
             duration: Duration(seconds: 1),
@@ -158,7 +158,6 @@ class Player extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(children: [
               EpisodeImage(
-                url: podcast.feed.image.url,
                 title: podcast.selectedEpisode.item.title,
               ),
               Padding(

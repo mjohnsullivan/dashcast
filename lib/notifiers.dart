@@ -128,7 +128,6 @@ class Episode with ChangeNotifier {
     final dir = await getApplicationDocumentsDirectory();
     final prefix = dir.path;
     final absolutePath = path.join(prefix, filename);
-    print(absolutePath);
     return absolutePath;
   }
 }

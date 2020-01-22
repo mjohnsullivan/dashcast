@@ -27,3 +27,4 @@ flutter:
   assets:
     - assets/surf_shimmy.mp3
     - assets/feed.xml
+    - assets/podcast.jpg

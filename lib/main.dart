@@ -74,7 +74,7 @@ class LeadingImage extends StatelessWidget {
         );
       },
       child: ClipOval(
-        child: Image.network(podcast.feed.image.url),
+        child: PodcastImage(),
       ),
     );
   }
@@ -171,5 +171,14 @@ class DownloadButton extends StatelessWidget {
             );
           }),
     );
+  }
+}
+
+class PodcastImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final podcast = Provider.of<Podcast>(context);
+    if (podcast.offline) return Image.asset('assets/podcast.jpg');
+    return Image.network(podcast.feed.image.url);
   }
 }
