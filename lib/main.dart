@@ -4,11 +4,10 @@
 
 import 'package:dashcast/notifiers.dart';
 import 'package:dashcast/player.dart';
+import 'package:dashcast/alert_wiggle.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-//ignore: unused_import
-import 'alert_wiggle.dart';
 
 final url = 'https://itsallwidgets.com/podcast/feed';
 
@@ -20,12 +19,13 @@ class EpisodeTile extends StatelessWidget {
     final episode = Provider.of<Episode>(context);
     final item = episode.item;
 
-    // TODO(live): Wrap with AlertWiggle
-    return ListTile(
-      leading: DownloadControl(),
-      title: Text(item.title),
-      subtitle: _subtitle(item.description),
-      onTap: () => _onTap(context, episode),
+    return AlertWiggle(
+      child: ListTile(
+        leading: DownloadControl(),
+        title: Text(item.title),
+        subtitle: _subtitle(item.description),
+        onTap: () => _onTap(context, episode),
+      ),
     );
   }
 
@@ -63,7 +63,6 @@ class LeadingImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final podcast = Provider.of<Podcast>(context);
     final episode = Provider.of<Episode>(context);
     return Consumer<Episode>(
       builder: (BuildContext context, Episode value, Widget child) {
@@ -73,8 +72,11 @@ class LeadingImage extends StatelessWidget {
           duration: Duration(milliseconds: 100),
         );
       },
-      child: ClipOval(
-        child: PodcastImage(),
+      child: Hero(
+        child: ClipOval(
+          child: PodcastImage(),
+        ),
+        tag: episode.item.title,
       ),
     );
   }

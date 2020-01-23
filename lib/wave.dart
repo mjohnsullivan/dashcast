@@ -26,6 +26,7 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       upperBound: 2 * pi,
     );
     _initPoints();
+    _controller.addListener(_newPoints);
   }
 
   @override
@@ -45,13 +46,51 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
         }
         return child;
       },
-      child: Container(),
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (BuildContext context, Widget child) {
+          return ClipPath(
+            clipper: WaveClipper(_controller.value, _points),
+            child: BlueGradient(),
+          );
+        },
+      ),
     );
   }
 
   /// Generates a random starting configuration for a 'sound wave' pattern.
   void _initPoints() {
-    _points = List.filled(widget.size.width.toInt() + 1, Offset(0, 0));
+    _points = [];
+    Random r = Random();
+    for (int i = 0; i < widget.size.width; i++) {
+      double x = i.toDouble();
+
+      // Set this point's y-coordinate to a random value
+      // no greater than 80% of the container's height
+      double y = r.nextDouble() * (widget.size.height * 0.8);
+
+      _points.add(Offset(x, y));
+    }
+  }
+
+  /// Modifies each point randomly by a maximum of +/- [maxDiff] pixels
+  void _newPoints() {
+    // The maximum number of pixels that points on a random wave can change by.
+    final maxDiff = 3.0;
+    Random r = Random();
+    for (int i = 0; i < _points.length; i++) {
+      var point = _points[i];
+
+      // Generate a random number between  -maxDiff and +maxDiff
+      double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
+
+      // Ensure that point is constrained between 0 and the size of the container
+      double newY = max(0.0, point.dy + diff);
+      newY = min(widget.size.height, newY);
+
+      Offset newPoint = Offset(point.dx, newY);
+      _points[i] = newPoint;
+    }
   }
 }
 
@@ -64,7 +103,7 @@ class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    _makeSineWave(size);
+    // _makeSineWave(size);
     path.addPolygon(_wavePoints, false);
 
     path.lineTo(size.width, size.height);
@@ -79,7 +118,7 @@ class WaveClipper extends CustomClipper<Path> {
     final yOffset = amplitude;
 
     for (int x = 0; x < size.width; x++) {
-      double y = sin(x);
+      double y = amplitude * sin(x / 4) + yOffset;
 
       Offset newPoint = Offset(x.toDouble(), y);
       _wavePoints[x] = newPoint;

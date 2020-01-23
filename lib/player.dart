@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:dashcast/main.dart';
 import 'package:dashcast/notifiers.dart';
-//ignore: unused_import
 import 'package:dashcast/wave.dart';
 
 import 'package:flutter/material.dart';
