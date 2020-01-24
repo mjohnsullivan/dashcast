@@ -26,7 +26,6 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       upperBound: 2 * pi,
     );
     _initPoints();
-    _controller.addListener(_newPoints);
   }
 
   @override
@@ -72,26 +71,6 @@ class _WaveState extends State<Wave> with SingleTickerProviderStateMixin {
       _points.add(Offset(x, y));
     }
   }
-
-  /// Modifies each point randomly by a maximum of +/- [maxDiff] pixels
-  void _newPoints() {
-    // The maximum number of pixels that points on a random wave can change by.
-    final maxDiff = 3.0;
-    Random r = Random();
-    for (int i = 0; i < _points.length; i++) {
-      var point = _points[i];
-
-      // Generate a random number between  -maxDiff and +maxDiff
-      double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
-
-      // Ensure that point is constrained between 0 and the size of the container
-      double newY = max(0.0, point.dy + diff);
-      newY = min(widget.size.height, newY);
-
-      Offset newPoint = Offset(point.dx, newY);
-      _points[i] = newPoint;
-    }
-  }
 }
 
 class WaveClipper extends CustomClipper<Path> {
@@ -103,13 +82,33 @@ class WaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    // _makeSineWave(size);
+    _modulateRandom(size);
     path.addPolygon(_wavePoints, false);
 
     path.lineTo(size.width, size.height);
     path.lineTo(0.0, size.height);
     path.close();
     return path;
+  }
+
+  /// Modifies each point randomly by a maximum of +/- [maxDiff] pixels
+  void _modulateRandom(Size size) {
+    // The maximum number of pixels that points on a random wave can change by.
+    final maxDiff = 3.0;
+    Random r = Random();
+    for (int i = 0; i < size.width; i++) {
+      var point = _wavePoints[i];
+
+      // Generate a random number between  -maxDiff and +maxDiff
+      double diff = maxDiff - r.nextDouble() * maxDiff * 2.0;
+
+      // Ensure that point is constrained between 0 and the size of the container
+      double newY = max(0.0, point.dy + diff);
+      newY = min(size.height, newY);
+
+      Offset newPoint = Offset(point.dx, newY);
+      _wavePoints[i] = newPoint;
+    }
   }
 
   //ignore: unused_element
