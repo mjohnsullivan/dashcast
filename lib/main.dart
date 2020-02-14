@@ -361,13 +361,13 @@ class _PlaybackButtonState extends State<PlaybackButtons> {
 
   @override
   void dispose() {
-    // TODO cleanly clean things up. Since _cleanup is async, sometimes the _playerSubscription listener calls setState after dispose but before it's canceled.
     _cleanup();
     super.dispose();
   }
 
   void _cleanup() async {
-    await _sound.stopPlayer();
+    if (_sound.audioState == t_AUDIO_STATE.IS_PLAYING)
+      await _sound.stopPlayer();
     _playerSubscription.cancel();
   }
 
